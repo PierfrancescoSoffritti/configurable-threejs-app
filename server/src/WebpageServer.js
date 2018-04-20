@@ -7,12 +7,12 @@ const id = "applicationSpecificLogic";
 const sockets = {};
 let count = 0;
 
-function WebpageServer() {
+function WebpageServer(callbacks) {
     app.use(express.static('./../../WebGLScene'))
-    startServer();
+    startServer(callbacks);
 
-    this.start = function() {
-        Object.keys(sockets).forEach( key => sockets[key].emit("startRobot") )
+    this.spawn = function() {
+        Object.keys(sockets).forEach( key => sockets[key].emit("spawnRobot") )
     }
 
     this.moveForward = function(duration) {
@@ -40,7 +40,7 @@ function WebpageServer() {
     }
 }
 
-function startServer() {
+function startServer(callbacks) {
     app.get('/', (req, res) => res.sendFile('index.html', { root: "./../../WebGLScene" }) );    
 
     io.on('connection', socket => {
@@ -48,16 +48,16 @@ function startServer() {
         sockets[key] = socket;
         count++;
         
-        // eventBus.post("webpage-connected");
+        callbacks.onWebpageReady();
 
-        // socket.on( 'sonarActivated', msg => eventBus.post("sonarActivated", msg ) );
-        // socket.on( 'collision', () => eventBus.post("collision") );
+        socket.on( 'sonarActivated', msg => callbacks.onSonarActivated(msg) );
+        socket.on( 'collision', () => callbacks.onCollision() );
     });
       
     http.listen(8080, () => console.log('listening on localhost:8080') );
 }
 
-function onFinish() {
+function finish() {
     Object.keys(sockets).forEach( key => sockets[key].disconnect() )
     http.close();
 }
