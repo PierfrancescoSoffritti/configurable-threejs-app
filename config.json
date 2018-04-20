@@ -1,0 +1,29 @@
+{
+    "ground": {
+        "size": { "x": 1, "y": 1}
+    },
+    "robot": {
+        "position": { "x": 1, "y": 1}
+    },
+    "sensors": [
+        {
+            "name": "sensor-1",
+            "position": { "x": 1, "y": 1},
+            "sense_axis": { "x": 1, "y": 0}
+        }
+    ],
+    "moving_obstacles": [
+        {
+            "name": "moving-obstacle-1",
+            "position": { "x": 1, "y": 1},
+            "direction_axis": { "x": 1, "y": 0}
+        }
+    ],
+    "static_obstacles": [
+        {
+            "name": "static-obstacle-1",
+            "center_position": { "x": 1, "y": 1},
+            "size": { "x": 1, "y": 1}
+        }
+    ]
+}
