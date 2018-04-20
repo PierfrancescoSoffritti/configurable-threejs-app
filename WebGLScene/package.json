@@ -1,0 +1,10 @@
+{
+  "name": "iss-3d-world",
+  "version": "1.0.0",
+  "description": "a 3D scene used for ISS exam",
+  "dependencies": {
+    "three": "^0.91.0"
+  },
+  "author": "Pierfrancesco Soffritti",
+  "license": "ISC"
+}
