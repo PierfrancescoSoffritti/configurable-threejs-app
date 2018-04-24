@@ -1,8 +1,10 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
 
-export default (scene, floorSize) => {
+export default (scene, ground) => {
 	
-	const geometry = new THREE.BoxBufferGeometry( floorSize, 1, floorSize);
+	const floorSize = ground.size;
+
+	const geometry = new THREE.BoxBufferGeometry( floorSize.x, 1, floorSize.y);
 	const material = new THREE.MeshStandardMaterial( {color: "#91B82D", roughness: 0.5, metalness: 0.1} );
 	const cube = new THREE.Mesh( geometry, material );
 
@@ -16,7 +18,7 @@ export default (scene, floorSize) => {
 	}
 
 	function checkCollision(position) {
-		if(Math.abs(position.x) >= floorSize/2 || Math.abs(position.z) >= floorSize/2 )
+		if(Math.abs(position.x) >= floorSize.x/2 || Math.abs(position.z) >= floorSize.y/2 )
 			return true;
 		else
 			return false;

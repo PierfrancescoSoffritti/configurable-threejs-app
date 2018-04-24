@@ -1,18 +1,21 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
 import eventBus from '../EventBus.js';
 
-export default (scene, camera, floorSize) => {
+export default (scene, camera, robot) => {
 
-    const playerPosition = { y: 30 };
+    const playerPosition = { x: robot.position.x, y: 30, z: robot.position.y };
 
     const group = new THREE.Group();
     group.rotation.y = -Math.PI/2;
     group.position.y = playerPosition.y;
-    group.position.z = getRandom(-floorSize/2, floorSize/2)
+    //group.position.z = getRandom(-floorSize/2, floorSize/2)
+    group.position.x = playerPosition.x
+    group.position.z = playerPosition.z;
+
     camera.position.z = group.position.z
-    //group.position.z = getRandom(-floorSize/4, 0)
     scene.add(group);
 
+    /*
     const geometry = new THREE.SphereGeometry( 1, 4, 2 );
 	const material = new THREE.MeshStandardMaterial( {color: "#2196F3", roughness: 0.5, metalness: 0.1, flatShading: true} );
     const finalPositionMarker = new THREE.Mesh( geometry, material );
@@ -23,6 +26,7 @@ export default (scene, camera, floorSize) => {
     finalPositionMarker.position.y = positionMarkerY;
     finalPositionMarker.castShadow = true;
     scene.add(finalPositionMarker)
+    */
 
     let playerMesh;
 
@@ -64,9 +68,12 @@ export default (scene, camera, floorSize) => {
         const positionY = Math.sin(time)/4;
 
         group.position.y = playerPosition.y + positionY;
+
+        /*
         finalPositionMarker.position.y = positionMarkerY + positionY;
         finalPositionMarker.scale.set(scale, scale, scale);
         finalPositionMarker.rotation.z += .01;
+        */
     }
 
     return {

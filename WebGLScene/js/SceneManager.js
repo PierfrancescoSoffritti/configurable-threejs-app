@@ -9,6 +9,8 @@ import PlayerControls from './controls/PlayerControls.js';
 import CollisionManager from './CollisionManager.js';
 import Sonars from './sceneSubjects/Sonars.js';
 
+import sceneConfig from '../sceneConfig.js';
+
 export default canvas => {
 
     const clock = new THREE.Clock();
@@ -18,9 +20,11 @@ export default canvas => {
         height: canvas.height
     }
     
-    const sceneConstants = {
-        floorSize: 50
-    }
+    // const sceneConstants = {
+    //     floorSize: 50
+    // }
+
+    const sceneConstants = sceneConfig;
 
     const scene = buildScene();
     const renderer = buildRender(screenDimensions);
@@ -49,7 +53,7 @@ export default canvas => {
         return renderer;
     }
 
-    function buildCamera({ width, height }, {floorSize}) {
+    function buildCamera({ width, height }, {ground}) {
         const aspectRatio = width / height;
         const fieldOfView = 60;
         const nearPlane = 1;
@@ -57,20 +61,20 @@ export default canvas => {
         const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
 
         camera.position.y = 20;
-        camera.position.x = floorSize/1.2;
+        //camera.position.x = ground.size.x/1.2;
         camera.lookAt(new THREE.Vector3(0,0,0));
 
         return camera;
     }
 
     function createSceneSubjects(scene, sceneConstants, camera) {
-        const floorSize = sceneConstants.floorSize;
+        const { ground, robot } = sceneConstants;
 
-        const floor = Floor(scene, floorSize);
-        const player = Player(scene, camera, floorSize);
-        const staticObstacles = StaticObstacles(scene, floorSize);
-        const movingObstacles = MovingObstacles(scene, floorSize);
-        const sensors = Sonars(scene, player.mesh.position, floorSize);
+        const floor = Floor(scene, ground);
+        const player = Player(scene, camera, robot);
+        const staticObstacles = StaticObstacles(scene, ground.size.x);
+        const movingObstacles = MovingObstacles(scene, ground.size.x);
+        const sensors = Sonars(scene, player.mesh.position, ground.size.x);
 
         const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sensors]);
         const controls = PlayerControls(player.mesh, camera, collisionManager);
