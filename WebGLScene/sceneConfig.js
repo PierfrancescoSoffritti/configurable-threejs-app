@@ -22,8 +22,8 @@ const config = {
     staticObstacles: [
         {
             name: "static-obstacle-1",
-            centerPosition: { x: 1, y: 1},
-            size: { x: 1, y: 1}
+            centerPosition: { x: 0.2, y: 0.5},
+            size: { x: 0.5, y: 0.01}
         }
     ]
 }
@@ -33,29 +33,23 @@ export default parseConfig(config)
 function parseConfig(config) {
     const { ground, robot, sensors, movingObstacles, staticObstacles } = config;
 
-    // robot.position.x *= ground.size.x;
-    // robot.position.y *= ground.size.y;
-
-    robot.position.x -= 0.5;
-    robot.position.x *= ground.size.x;
-
-    robot.position.y -= 0.5;
-    robot.position.y *= ground.size.y;
+    robot.position.x = ( robot.position.x - 0.5 ) * ground.size.x
+    robot.position.y = ( robot.position.y - 0.5 ) * ground.size.y;
 
     sensors.forEach( sensor => {
-        sensor.position.x *= ground.size.x;
-        sensor.position.y *= ground.size.y;
+        sensor.position.x = ( sensor.position.x - 0.5 ) * ground.size.x
+        sensor.position.y = ( sensor.position.y - 0.5 ) * ground.size.y;
     });
 
     movingObstacles.forEach( obstacle => {
-        obstacle.position.x *= ground.size.x;
-        obstacle.position.y *= ground.size.y;
+        obstacle.position.x = ( obstacle.position.x - 0.5 ) * ground.size.x
+        obstacle.position.y = ( obstacle.position.y - 0.5 ) * ground.size.y;
     });
 
     staticObstacles.forEach( obstacle => {
-        obstacle.centerPosition.x *= ground.size.x;
-        obstacle.centerPosition.y *= ground.size.y;
-        
+        obstacle.centerPosition.x = ( obstacle.centerPosition.x - 0.5 ) * ground.size.x
+        obstacle.centerPosition.y = ( obstacle.centerPosition.y - 0.5 ) * ground.size.y;
+                
         obstacle.size.x *= ground.size.x;
         obstacle.size.y *= ground.size.y;
     });

@@ -1,35 +1,54 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
 
-export default (scene, floorSize) => {
-	
-	const obstacleLength = floorSize/2.5;
-	const obstacleWidth = 1;
+export default (scene, staticObstaclesConfig) => {
 
-	const geometry = new THREE.BoxBufferGeometry( obstacleWidth, obstacleLength, 4);
-	const material = new THREE.MeshStandardMaterial( {color: "#269C26", roughness: 0.5, metalness: 0.1} );
-	const staticObstacleBlueprint = new THREE.Mesh( geometry, material );
-	staticObstacleBlueprint.castShadow = true;
-    staticObstacleBlueprint.position.y = 1.9;
-	staticObstacleBlueprint.rotation.x = Math.PI/2;
-	
-	const obstacle1 = staticObstacleBlueprint.clone();
-	obstacle1.position.z = (floorSize/2)-obstacleLength/2;
-    scene.add( obstacle1 );
-    
-	const obstacle2 = staticObstacleBlueprint.clone();
-    obstacle2.position.z = -(floorSize/2)+obstacleLength/2;
-    scene.add( obstacle2 );
+	const obstacles = [];
+	staticObstaclesConfig.forEach( config => obstacles.push(new StaticObstacle(scene, config) ) );
 	
 	function update(time) {
-		//const scale = Math.sin(time)+2;
-		//mesh.scale.set(scale, scale, scale);
+		obstacles.forEach( obstacle => obstacle.update(time) );
 	}
 
 	function checkCollision(position) {
-		if( ( Math.abs(position.x) <= obstacle1.position.x+obstacleWidth*2 || Math.abs(position.x) <= obstacle2.position.x+obstacleWidth*2 ) &&
-			Math.abs(position.z) >= obstacle1.position.z-obstacleLength/2 )
-			return true;
-		else
+		for(let i=0; i<obstacles.length; i++)
+			if( obstacles[i].checkCollision(position) )
+				return true;
+
+		return false;
+	}
+
+	return {
+		update,
+		checkCollision
+	}
+}
+
+// {
+// 	name: "static-obstacle-1",
+// 	centerPosition: { x: 1, y: 1},
+// 	size: { x: 1, y: 1}
+// }
+
+function StaticObstacle(scene, config) {
+
+	const geometry = new THREE.BoxBufferGeometry( config.size.x, 4, config.size.y);
+	const material = new THREE.MeshStandardMaterial( {color: "#269C26", roughness: 0.5, metalness: 0.1} );
+	const obstacle = new THREE.Mesh( geometry, material );
+	obstacle.castShadow = true;
+	
+	obstacle.position.x = config.centerPosition.x;
+	obstacle.position.y = 2;
+	obstacle.position.z = -config.centerPosition.y;
+
+    scene.add( obstacle );
+	
+	function update(time) {
+	}
+
+	function checkCollision(position) {
+		//if( Math.abs(position.x) <= obstacle1.position.x+obstacleWidth*2  && Math.abs(position.z) >= obstacle1.position.z-obstacleLength/2 )
+			//return true;
+		//else
 			return false;
 	}
 

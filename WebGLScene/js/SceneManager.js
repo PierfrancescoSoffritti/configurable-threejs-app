@@ -66,11 +66,13 @@ export default canvas => {
     }
 
     function createSceneSubjects(scene, sceneConstants, camera) {
-        const { ground, robot } = sceneConstants;
+        const groundConfig = sceneConstants.ground;
+        const robotConfig = sceneConstants.robot;
+        const staticObstaclesConfig = sceneConstants.staticObstacles;
 
-        const floor = Floor(scene, ground);
-        const player = Player(scene, robot);
-        //const staticObstacles = StaticObstacles(scene, ground.size.x);
+        const floor = Floor(scene, groundConfig);
+        const player = Player(scene, robotConfig);
+        const staticObstacles = StaticObstacles(scene, staticObstaclesConfig);
         //const movingObstacles = MovingObstacles(scene, ground.size.x);
         //const sensors = Sonars(scene, player.mesh.position, ground.size.x);
 

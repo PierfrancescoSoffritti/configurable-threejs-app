@@ -16,7 +16,7 @@ export default (scene, ground) => {
 	}
 
 	function checkCollision(position) {
-		if(Math.abs(position.x) >= floorSize.x/2 || Math.abs(position.z) >= floorSize.y/2 )
+		if(Math.abs(position.x) > floorSize.x/2 || Math.abs(position.z) > floorSize.y/2 )
 			return true;
 		else
 			return false;
