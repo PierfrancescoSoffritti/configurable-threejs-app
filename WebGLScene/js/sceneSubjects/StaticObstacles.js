@@ -48,10 +48,10 @@ function StaticObstacle(scene, config) {
 	}
 
 	function checkCollision(position) {
-		const absPositionZ = -(position.z);
+		const positivePositionZ = -position.z;
 
 		if( ( position.x >= obstacleBoundaries.minX && position.x <= obstacleBoundaries.maxX ) &&
-			( absPositionZ >= obstacleBoundaries.minY && absPositionZ <= obstacleBoundaries.maxY ) )
+			( positivePositionZ >= obstacleBoundaries.minY && positivePositionZ <= obstacleBoundaries.maxY ) )
 			return true;
 		else
 			return false;

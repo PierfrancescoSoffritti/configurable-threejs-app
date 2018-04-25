@@ -69,22 +69,23 @@ export default canvas => {
         const groundConfig = sceneConstants.ground;
         const robotConfig = sceneConstants.robot;
         const staticObstaclesConfig = sceneConstants.staticObstacles;
+        const movingObstaclesConfig = sceneConstants.movingObstacles;
 
         const floor = Floor(scene, groundConfig);
         const player = Player(scene, robotConfig);
         const staticObstacles = StaticObstacles(scene, staticObstaclesConfig);
-        //const movingObstacles = MovingObstacles(scene, ground.size.x);
+        const movingObstacles = MovingObstacles(scene, movingObstaclesConfig);
         //const sensors = Sonars(scene, player.mesh.position, ground.size.x);
 
         //const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sensors]);
-        const collisionManager = CollisionManager([floor, staticObstacles]);
+        const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles]);
         const controls = PlayerControls(player.mesh, camera, collisionManager);
 
         const sceneSubjects = [
             GeneralLights(scene),
             floor,
-            //staticObstacles,
-            //movingObstacles,
+            staticObstacles,
+            movingObstacles,
             //sensors,
             player,
             controls

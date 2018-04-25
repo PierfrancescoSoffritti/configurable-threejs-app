@@ -3,7 +3,7 @@ const config = {
         size: { x: 40, y: 40 }
     },
     robot: {
-        position: { x: 1, y: 0.1 }
+        position: { x: 0.5, y: 0.8 }
     },
     sensors: [
         {
@@ -20,16 +20,16 @@ const config = {
         }
     ],
     staticObstacles: [
-        {
-            name: "static-obstacle-1",
-            centerPosition: { x: 0.2, y: 0.5},
-            size: { x: 0.5, y: 0.01}
-        },
-        {
-            name: "static-obstacle-2",
-            centerPosition: { x: 0.1, y: 0.1},
-            size: { x: 0.1, y: 0.5}
-        }
+        // {
+        //     name: "static-obstacle-1",
+        //     centerPosition: { x: 0.2, y: 0.5},
+        //     size: { x: 0.5, y: 0.01}
+        // },
+        // {
+        //     name: "static-obstacle-2",
+        //     centerPosition: { x: 0.1, y: 0.1},
+        //     size: { x: 0.1, y: 0.5}
+        // }
     ]
 }
 
