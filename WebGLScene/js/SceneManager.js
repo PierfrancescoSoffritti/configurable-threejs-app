@@ -11,6 +11,8 @@ import Sonars from './sceneSubjects/Sonars.js';
 
 import sceneConfig from '../sceneConfig.js';
 
+import dat from '../node_modules/dat.gui/build/dat.gui.module.js';
+
 export default canvas => {
 
     const clock = new THREE.Clock();
@@ -19,12 +21,34 @@ export default canvas => {
         width: canvas.width,
         height: canvas.height
     }
-    
-    // const sceneConstants = {
-    //     floorSize: 50
-    // }
 
     const sceneConstants = sceneConfig;
+    const datGui = new dat.GUI();
+
+    mapObject(datGui, sceneConstants);
+
+    function mapObject(datGui, object, folder) {
+        for(let key in object) {  
+
+            if(typeof object[key] === 'object') {
+
+                let newFolder;
+                if(folder)
+                    newFolder = folder.addFolder(key);
+                else
+                    newFolder = datGui.addFolder(key);
+
+                mapObject(datGui, object[key], newFolder);
+
+            } else {
+                if(folder)
+                    folder.add( object, key );
+                else
+                    datGui.add( object, key );
+            }
+
+        }
+    }
 
     const scene = buildScene();
     const renderer = buildRender(screenDimensions);

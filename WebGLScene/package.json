@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "a 3D scene used for ISS exam",
   "dependencies": {
+    "dat.gui": "^0.7.1",
     "three": "^0.91.0"
   },
   "author": "Pierfrancesco Soffritti",
