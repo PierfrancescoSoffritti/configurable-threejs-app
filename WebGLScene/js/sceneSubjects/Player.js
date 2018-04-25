@@ -7,7 +7,7 @@ export default (scene, robot) => {
     const playerPosition = { x: robot.position.x, y: 3, z: robot.position.y };
 
     const group = new THREE.Group();
-    group.rotation.y = -Math.PI/2;
+    group.rotation.y = Math.PI;
     
     group.position.x = playerPosition.x;
     group.position.y = playerPosition.y;
