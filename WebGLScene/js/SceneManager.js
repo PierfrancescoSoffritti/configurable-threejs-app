@@ -22,10 +22,10 @@ export default canvas => {
         height: canvas.height
     }
 
-    const sceneConstants = sceneConfig;
+    const sceneConstants = parseConfig(sceneConfig);
     const datGui = new dat.GUI();
 
-    mapObject(datGui, sceneConstants);
+    mapObject(datGui, sceneConfig);
 
     function mapObject(datGui, object, folder) {
         for(let key in object) {  
@@ -41,13 +41,74 @@ export default canvas => {
                 mapObject(datGui, object[key], newFolder);
 
             } else {
+                let controller;
+
                 if(folder)
-                    folder.add( object, key );
+                    controller = folder.add( object, key );
                 else
-                    datGui.add( object, key );
+                    controller = datGui.add( object, key );
+
+                controller.onChange( value => updateSceneConstants(sceneConstants, parseConfig(sceneConfig)) );
             }
 
         }
+    }
+
+    function updateSceneConstants(sceneConstants, newSceneConstants) {
+        const { floor, robot, sonars, movingObstacles, staticObstacles } = newSceneConstants;
+    
+        sceneConstants.floor.size.x = floor.size.x;
+        sceneConstants.floor.size.y = floor.size.y;
+
+        sceneConstants.robot.position.x = robot.position.x;
+        sceneConstants.robot.position.y = robot.position.y;
+    
+        for(let i=0; i<sceneConstants.sonars.length; i++) {
+            sceneConstants.sonars[i].position.x = sonars[i].position.x;
+            sceneConstants.sonars[i].position.y = sonars[i].position.y;
+        }
+
+        for(let i=0; i<sceneConstants.movingObstacles.length; i++) {
+            sceneConstants.movingObstacles[i].position.x = movingObstacles[i].position.x;
+            sceneConstants.movingObstacles[i].position.y = movingObstacles[i].position.y;
+        }
+
+        for(let i=0; i<sceneConstants.staticObstacles.length; i++) {
+            sceneConstants.staticObstacles[i].centerPosition.x = staticObstacles[i].centerPosition.x;
+            sceneConstants.staticObstacles[i].centerPosition.y = staticObstacles[i].centerPosition.y;
+
+            sceneConstants.staticObstacles[i].size.x = staticObstacles[i].size.x;
+            sceneConstants.staticObstacles[i].size.y = staticObstacles[i].size.y;
+        }
+    }
+
+    function parseConfig(config) {
+        const clone = JSON.parse(JSON.stringify(config));
+
+        const { floor, robot, sonars, movingObstacles, staticObstacles } = clone;
+    
+        robot.position.x = ( robot.position.x - 0.5 ) * floor.size.x;
+        robot.position.y = ( robot.position.y - 0.5 ) * floor.size.y;
+    
+        sonars.forEach( sonar => {
+            sonar.position.x = ( sonar.position.x - 0.5 ) * floor.size.x;
+            sonar.position.y = ( sonar.position.y - 0.5 ) * floor.size.y;
+        });
+    
+        movingObstacles.forEach( obstacle => {
+            obstacle.position.x = ( obstacle.position.x - 0.5 ) * floor.size.x;
+            obstacle.position.y = ( obstacle.position.y - 0.5 ) * floor.size.y;
+        });
+    
+        staticObstacles.forEach( obstacle => {
+            obstacle.centerPosition.x = ( obstacle.centerPosition.x - 0.5 ) * floor.size.x;
+            obstacle.centerPosition.y = ( obstacle.centerPosition.y - 0.5 ) * floor.size.y;
+                    
+            obstacle.size.x *= floor.size.x;
+            obstacle.size.y *= floor.size.y;
+        });
+    
+        return clone;
     }
 
     const scene = buildScene();

@@ -29,7 +29,7 @@ export default (scene, sonarsConfig) => {
 	}
 }
 
-function Sonar(scene, sonarsConfig) {
+function Sonar(scene, config) {
     const size = 2;
 
 	const geometry = new THREE.BoxBufferGeometry( size, size, size );
@@ -38,24 +38,23 @@ function Sonar(scene, sonarsConfig) {
     const mesh = new THREE.Mesh( geometry, material );
     mesh.castShadow = true;
 
-    mesh.position.set( sonarsConfig.position.x, size/1.5, sonarsConfig.position.y );
-
     scene.add( mesh );
 
     let sensedX, sensedY = false;
     const padding = 1.5;
 	
 	function update(time) {       
+        mesh.position.set( config.position.x, size/1.5, config.position.y );
         updateColor(sensedX || sensedY, mesh.material); 
     }
 
 	function checkCollision(position) {
     
-        if(sonarsConfig.senseAxis.x) 
-            sensedX = sense( { x: position.x, y: position.z }, { x: sonarsConfig.position.x, y: sonarsConfig.position.y }, padding, "x", sonarsConfig.name )
+        if(config.senseAxis.x) 
+            sensedX = sense( { x: position.x, y: position.z }, { x: config.position.x, y: config.position.y }, padding, "x", config.name )
 
-        if(sonarsConfig.senseAxis.y)
-            sensedY = sense( { x: position.z, y: position.x }, { x: sonarsConfig.position.y, y: sonarsConfig.position.x }, padding, "y", sonarsConfig.name )
+        if(config.senseAxis.y)
+            sensedY = sense( { x: position.z, y: position.x }, { x: config.position.y, y: config.position.x }, padding, "y", config.name )
                     
         return { collision: false };
     }

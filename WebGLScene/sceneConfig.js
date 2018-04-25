@@ -48,37 +48,4 @@ const config = {
     ]
 }
 
-export default parseConfig(config)
-
-function parseConfig(config) {
-    const { floor, robot, sonars, movingObstacles, staticObstacles } = config;
-
-    robot.position.x = ( robot.position.x - 0.5 ) * floor.size.x;
-    robot.position.y = ( robot.position.y - 0.5 ) * floor.size.y;
-
-    sonars.forEach( sonar => {
-        sonar.position.x = ( sonar.position.x - 0.5 ) * floor.size.x;
-        sonar.position.y = ( sonar.position.y - 0.5 ) * floor.size.y;
-    });
-
-    movingObstacles.forEach( obstacle => {
-        obstacle.position.x = ( obstacle.position.x - 0.5 ) * floor.size.x;
-        obstacle.position.y = ( obstacle.position.y - 0.5 ) * floor.size.y;
-    });
-
-    staticObstacles.forEach( obstacle => {
-        obstacle.centerPosition.x = ( obstacle.centerPosition.x - 0.5 ) * floor.size.x;
-        obstacle.centerPosition.y = ( obstacle.centerPosition.y - 0.5 ) * floor.size.y;
-                
-        obstacle.size.x *= floor.size.x;
-        obstacle.size.y *= floor.size.y;
-    });
-
-    return {
-        floor,
-        robot,
-        sonars,
-        movingObstacles,
-        staticObstacles
-    }
-}
+export default config;

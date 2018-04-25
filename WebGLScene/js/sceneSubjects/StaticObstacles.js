@@ -27,16 +27,15 @@ export default (scene, staticObstaclesConfig) => {
 }
 function StaticObstacle(scene, config) {
 
-	const geometry = new THREE.BoxBufferGeometry( config.size.x, 4, config.size.y);
+	const geometry = new THREE.BoxBufferGeometry( 1, 4, 1);
 	const material = new THREE.MeshStandardMaterial( {color: "#269C26", roughness: 0.5, metalness: 0.1} );
-	const obstacle = new THREE.Mesh( geometry, material );
-	obstacle.castShadow = true;
-	
-	obstacle.position.x = config.centerPosition.x;
-	obstacle.position.y = 2;
-	obstacle.position.z = -config.centerPosition.y;
+	const mesh = new THREE.Mesh( geometry, material );
+	mesh.castShadow = true;
 
 	const padding = 2;
+
+	scene.add( mesh );
+	
 	const obstacleBoundaries = {
 		minX: config.centerPosition.x - config.size.x/2 -padding,
 		maxX: config.centerPosition.x + config.size.x/2 +padding,
@@ -44,10 +43,15 @@ function StaticObstacle(scene, config) {
 		minY: config.centerPosition.y - config.size.y/2 -padding,
 		maxY: config.centerPosition.y + config.size.y/2 +padding
 	}
-
-    scene.add( obstacle );
 	
 	function update(time) {
+		mesh.scale.set( config.size.x, 1, config.size.y );
+		mesh.position.set( config.centerPosition.x, 2, -config.centerPosition.y )
+
+		obstacleBoundaries.minX = config.centerPosition.x - config.size.x/2 -padding;
+		obstacleBoundaries.maxX = config.centerPosition.x + config.size.x/2 +padding;
+		obstacleBoundaries.minY = config.centerPosition.y - config.size.y/2 -padding;
+		obstacleBoundaries.maxY = config.centerPosition.y + config.size.y/2 +padding;
 	}
 
 	function checkCollision(position) {

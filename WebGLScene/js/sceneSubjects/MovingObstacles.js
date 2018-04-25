@@ -35,19 +35,15 @@ function MovingObstacle(scene, config) {
 	const obstacle = new THREE.Mesh( geometry, material );
 	obstacle.castShadow = true;
 
-	obstacle.position.x = config.position.x;
 	obstacle.position.y = 2;
-	obstacle.position.z = config.position.y;
 
     scene.add( obstacle );
     
 	function update(time) {
 		const sin = Math.sin(time * config.speed )*config.range;
 
-		if(config.directionAxis.x)
-			obstacle.position.x = config.position.x + sin;
-		if(config.directionAxis.y)
-			obstacle.position.z = config.position.y + sin;
+		obstacle.position.x = config.position.x + ( config.directionAxis.x ? sin : 0 );
+		obstacle.position.z = config.position.y + ( config.directionAxis.y ? sin : 0 );
 	}
 
 	function checkCollision(position) {

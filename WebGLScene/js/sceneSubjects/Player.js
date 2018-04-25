@@ -14,8 +14,6 @@ export default (scene, robotConfiguration) => {
     
     group.position.set(playerPosition.x, playerPosition.y, playerPosition.z);    
 
-    //const positionMarker = new PositionMarker(scene, robotConfiguration);
-
     scene.add(group);
 
     let playerMesh;
@@ -55,8 +53,6 @@ export default (scene, robotConfiguration) => {
         const positionY = Math.sin(time)/4;
 
         group.position.y = playerPosition.y + positionY;
-
-        //positionMarker.update(time);
     }
 
     return {
