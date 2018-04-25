@@ -4,13 +4,18 @@ const config = {
     },
     robot: {
         position: { x: 0.1, y: 0.8 },
-        speed: 1
+        speed: 0.2
     },
     sonars: [
         {
             name: "sonar-1",
             position: { x: 0.8, y: 0.8 },
-            senseAxis: { x: true, y: true }
+            senseAxis: { x: true, y: false }
+        }, 
+        {
+            name: "sonar-2",
+            position: { x: 0.2, y: 0.2 },
+            senseAxis: { x: false, y: true }
         }
     ],
     movingObstacles: [

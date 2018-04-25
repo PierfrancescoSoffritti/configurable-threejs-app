@@ -80,7 +80,7 @@ export default canvas => {
 
         const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sonars]);
         
-        const controls = PlayerControls(player.mesh, camera, collisionManager);
+        const controls = PlayerControls(player.mesh, camera, robotConfig.speed, collisionManager);
 
         const sceneSubjects = [
             GeneralLights(scene),

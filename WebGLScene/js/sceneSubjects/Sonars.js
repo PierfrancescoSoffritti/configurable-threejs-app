@@ -37,22 +37,21 @@ function Sonar(scene, sonarsConfig) {
 
     scene.add( mesh );
 
-    let sensed = false;
+    let sensedX, sensedY = false;
     const padding = 1.5;
 	
 	function update(time) {       
-        updateColor(sensed, mesh.material); 
+        updateColor(sensedX || sensedY, mesh.material); 
     }
 
 	function checkCollision(position) {
     
         if(sonarsConfig.senseAxis.x) 
-            sensed = sense( { x: position.x, y: position.z }, { x: sonarsConfig.position.x, y: sonarsConfig.position.y }, padding, "x", sonarsConfig.name )
+            sensedX = sense( { x: position.x, y: position.z }, { x: sonarsConfig.position.x, y: sonarsConfig.position.y }, padding, "x", sonarsConfig.name )
 
         if(sonarsConfig.senseAxis.y)
-            sensed = 
-                sense( { x: position.z, y: position.x }, { x: sonarsConfig.position.y, y: sonarsConfig.position.x }, padding, "y", sonarsConfig.name )
-                    ? true : sensed;
+            sensedY = sense( { x: position.z, y: position.x }, { x: sonarsConfig.position.y, y: sonarsConfig.position.x }, padding, "y", sonarsConfig.name )
+                    
 
         return false;
     }

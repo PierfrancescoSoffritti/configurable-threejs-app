@@ -1,6 +1,6 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
 
-export default (mesh, camera, collisionManager) => {
+export default (mesh, camera, speed, collisionManager) => {
 	
 	const W = 87
     const A = 65
@@ -11,8 +11,6 @@ export default (mesh, camera, collisionManager) => {
 	
     let forward = false
     let rotating = false
-
-    const speed = 0.2
 
     setCameraPositionRelativeToMesh(camera, mesh);
 
