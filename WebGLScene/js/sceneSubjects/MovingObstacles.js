@@ -45,7 +45,7 @@ function MovingObstacle(scene, config) {
     scene.add( obstacle );
     
 	function update(time) {
-		const sin = Math.sin(time * config.speed )*4;
+		const sin = Math.sin(time * config.speed )*config.range;
 		if(config.directionAxis.x)
 			obstacle.position.x = config.position.x + sin;
 		if(config.directionAxis.y)

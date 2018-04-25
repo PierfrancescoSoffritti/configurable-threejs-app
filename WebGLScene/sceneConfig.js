@@ -9,7 +9,7 @@ const config = {
         {
             name: "sensor-1",
             position: { x: 1, y: 1 },
-            senseAxis: { x: 1, y: 0 }
+            senseAxis: { x: true, y: false }
         }
     ],
     movingObstacles: [
@@ -17,13 +17,15 @@ const config = {
             name: "moving-obstacle-1",
             position: { x: 1, y: 1 },
             directionAxis: { x: true, y: false },
-            speed: 1
+            speed: 1,
+            range: 1
         },
         {
             name: "moving-obstacle-2",
             position: { x: 0, y: 0 },
             directionAxis: { x: false, y: true },
-            speed: 2
+            speed: 2,
+            range: 4
         }
     ],
     staticObstacles: [
