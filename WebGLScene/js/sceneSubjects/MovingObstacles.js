@@ -10,11 +10,14 @@ export default (scene, movingObstaclesConfig) => {
 	}
 
 	function checkCollision(position) {
-        for(let i=0; i<obstacles.length; i++)
-			if( obstacles[i].checkCollision(position) )
-				return true;
+        for(let i=0; i<obstacles.length; i++) {
+			const collisionCheck = obstacles[i].checkCollision(position)
+			
+			if(collisionCheck.collision)
+				return collisionCheck;
+		}
 
-		return false;
+		return { collision: false };
 	}
 
 	return {
@@ -49,9 +52,9 @@ function MovingObstacle(scene, config) {
 
 	function checkCollision(position) {
         if(position.distanceTo( obstacle.position) < obstacleRadius*3)
-			return true;
+			return { collision: true, objectName: config.name };
 		else
-			return false;
+			return { collision: false };
 	}
 
 	return {

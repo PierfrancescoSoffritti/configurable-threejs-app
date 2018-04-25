@@ -5,10 +5,10 @@ export default colliders => {
 
     function checkCollision(position) {
         for(let i=0; i<colliders.length; i++) {
-            const collision = colliders[i].checkCollision(position);
+            const collisionCheck = colliders[i].checkCollision(position);
             
-            if(collision) {
-                eventBus.post(eventBusEvents.collision);
+            if(collisionCheck.collision) {
+                eventBus.post(eventBusEvents.collision, collisionCheck.objectName);
                 return true;
             }
         }

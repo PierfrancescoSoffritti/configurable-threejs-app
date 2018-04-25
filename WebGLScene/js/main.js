@@ -16,7 +16,7 @@ socket.on( 'alarm', duration => stopMoving() )
 socket.on( 'stop', duration => stopMoving() )
 
 eventBus.subscribe( eventBusEvents.sonarActivated, sonarId => socket.emit("sonarActivated", sonarId))
-eventBus.subscribe( eventBusEvents.collision, () => { socket.emit("collision"); stopMoving() })
+eventBus.subscribe( eventBusEvents.collision, objectName => { console.log(`collision with: ${objectName}`); socket.emit("collision"); stopMoving(); })
 
 const W = 87
 const A = 65

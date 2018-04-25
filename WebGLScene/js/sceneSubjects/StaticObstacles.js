@@ -10,11 +10,14 @@ export default (scene, staticObstaclesConfig) => {
 	}
 
 	function checkCollision(position) {
-		for(let i=0; i<obstacles.length; i++)
-			if( obstacles[i].checkCollision(position) )
-				return true;
+        for(let i=0; i<obstacles.length; i++) {
+			const collisionCheck = obstacles[i].checkCollision(position)
+			
+			if(collisionCheck.collision)
+				return collisionCheck;
+		}
 
-		return false;
+		return { collision: false };
 	}
 
 	return {
@@ -52,9 +55,9 @@ function StaticObstacle(scene, config) {
 
 		if( ( position.x >= obstacleBoundaries.minX && position.x <= obstacleBoundaries.maxX ) &&
 			( positivePositionZ >= obstacleBoundaries.minY && positivePositionZ <= obstacleBoundaries.maxY ) )
-			return true;
+			return { collision: true, objectName: config.name };
 		else
-			return false;
+			return { collision: false };
 	}
 
 	return {

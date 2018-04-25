@@ -11,13 +11,16 @@ export default (scene, sonarsConfig) => {
 	function update(time) {
         sonars.forEach( sonars => sonars.update(time) );
 	}
+    
+    function checkCollision(position) {
+        for(let i=0; i<sonars.length; i++) {
+			const collisionCheck = sonars[i].checkCollision(position)
+			
+			if(collisionCheck.collision)
+				return collisionCheck;
+		}
 
-	function checkCollision(position) {
-        for(let i=0; i<sonars.length; i++)
-			if( sonars[i].checkCollision(position) )
-				return true;
-
-		return false;
+		return { collision: false };
 	}
 
 	return {
@@ -54,7 +57,7 @@ function Sonar(scene, sonarsConfig) {
         if(sonarsConfig.senseAxis.y)
             sensedY = sense( { x: position.z, y: position.x }, { x: sonarsConfig.position.y, y: sonarsConfig.position.x }, padding, "y", sonarsConfig.name )
                     
-        return false;
+        return { collision: false };
     }
     
     function sense(targetPosition, sonarPosition, padding, axis, sonarName) {
