@@ -1,9 +1,9 @@
 const config = {
     ground: {
-        size: { x: 50, y: 50}
+        size: { x: 40, y: 40 }
     },
     robot: {
-        position: { x: .5, y: .5}
+        position: { x: 1, y: 0.1 }
     },
     sensors: [
         {
@@ -33,7 +33,13 @@ export default parseConfig(config)
 function parseConfig(config) {
     const { ground, robot, sensors, movingObstacles, staticObstacles } = config;
 
+    // robot.position.x *= ground.size.x;
+    // robot.position.y *= ground.size.y;
+
+    robot.position.x -= 0.5;
     robot.position.x *= ground.size.x;
+
+    robot.position.y -= 0.5;
     robot.position.y *= ground.size.y;
 
     sensors.forEach( sensor => {

@@ -1,18 +1,18 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
 import eventBus from '../EventBus.js';
 
-export default (scene, camera, robot) => {
+export default (scene, robot) => {
 
-    const playerPosition = { x: robot.position.x, y: 30, z: robot.position.y };
+    //const playerPosition = { x: robot.position.x, y: 30, z: robot.position.y };
+    const playerPosition = { x: robot.position.x, y: 3, z: robot.position.y };
 
     const group = new THREE.Group();
     group.rotation.y = -Math.PI/2;
+    
+    group.position.x = playerPosition.x;
     group.position.y = playerPosition.y;
-    //group.position.z = getRandom(-floorSize/2, floorSize/2)
-    group.position.x = playerPosition.x
     group.position.z = playerPosition.z;
 
-    camera.position.z = group.position.z
     scene.add(group);
 
     /*

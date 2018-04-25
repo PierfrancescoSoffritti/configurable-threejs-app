@@ -61,8 +61,6 @@ export default canvas => {
         const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
 
         camera.position.y = 20;
-        //camera.position.x = ground.size.x/1.2;
-        camera.lookAt(new THREE.Vector3(0,0,0));
 
         return camera;
     }
@@ -71,20 +69,21 @@ export default canvas => {
         const { ground, robot } = sceneConstants;
 
         const floor = Floor(scene, ground);
-        const player = Player(scene, camera, robot);
-        const staticObstacles = StaticObstacles(scene, ground.size.x);
-        const movingObstacles = MovingObstacles(scene, ground.size.x);
-        const sensors = Sonars(scene, player.mesh.position, ground.size.x);
+        const player = Player(scene, robot);
+        //const staticObstacles = StaticObstacles(scene, ground.size.x);
+        //const movingObstacles = MovingObstacles(scene, ground.size.x);
+        //const sensors = Sonars(scene, player.mesh.position, ground.size.x);
 
-        const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sensors]);
+        //const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sensors]);
+        const collisionManager = CollisionManager([floor]);
         const controls = PlayerControls(player.mesh, camera, collisionManager);
 
         const sceneSubjects = [
             GeneralLights(scene),
             floor,
-            staticObstacles,
-            movingObstacles,
-            sensors,
+            //staticObstacles,
+            //movingObstacles,
+            //sensors,
             player,
             controls
         ];

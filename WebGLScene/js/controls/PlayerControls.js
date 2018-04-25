@@ -13,6 +13,15 @@ export default (mesh, camera, collisionManager) => {
     let rotating = false
 
     const speed = 0.2
+
+    setCameraPositionRelativeToMesh(camera, mesh);
+
+    function setCameraPositionRelativeToMesh(camera, mesh) {
+        camera.position.x = mesh.position.x;
+        camera.position.z = mesh.position.z + 20;
+
+        camera.lookAt(mesh.position);
+    }
 	
 	function onKeyDown(keyCode, duration) {
         if(keyCode === W)

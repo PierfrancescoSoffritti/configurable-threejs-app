@@ -13,8 +13,6 @@ export default (scene, ground) => {
 	scene.add( cube );
 	
 	function update(time) {
-		//const scale = Math.sin(time)+2;
-		//mesh.scale.set(scale, scale, scale);
 	}
 
 	function checkCollision(position) {

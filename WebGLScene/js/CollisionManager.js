@@ -8,6 +8,7 @@ export default colliders => {
             
             if(collision) {
                 eventBus.post("collision");
+                console.log("cooll")
                 return true;
             }
         }
