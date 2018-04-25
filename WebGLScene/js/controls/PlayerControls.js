@@ -1,6 +1,6 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
 
-export default (mesh, camera, speed, collisionManager) => {
+export default (mesh, camera, config, collisionManager) => {
 	
 	const W = 87
     const A = 65
@@ -65,7 +65,7 @@ export default (mesh, camera, speed, collisionManager) => {
     
 		if(forward || backwards) {         
             const direction = backwards ? -1 : 1;
-            const stepVector = directionVector.multiplyScalar( speed * direction );
+            const stepVector = directionVector.multiplyScalar( config.speed * direction );
             const tPosition = mesh.position.clone().add(stepVector);
             
             const collision = collisionManager.checkCollision(tPosition);
@@ -76,9 +76,17 @@ export default (mesh, camera, speed, collisionManager) => {
              }            
         } else 
             collisionManager.checkCollision(mesh.position);
-	}
+    }
+    
+    function resetPosition() {
+        mesh.position.x = config.position.x;
+        mesh.position.z = config.position.y;
+
+        setCameraPositionRelativeToMesh(camera, mesh)
+    }
 	
 	return {
+        resetPosition,
 		onKeyDown,
 		onKeyUp,
 		update

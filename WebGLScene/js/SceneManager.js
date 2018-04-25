@@ -48,7 +48,10 @@ export default canvas => {
                 else
                     controller = datGui.add( object, key );
 
-                controller.onChange( value => updateSceneConstants(sceneConstants, parseConfig(sceneConfig)) );
+                controller.onChange( value => { 
+                    updateSceneConstants(sceneConstants, parseConfig(sceneConfig));
+                    controls.resetPosition(); 
+                } );
             }
 
         }
@@ -165,7 +168,7 @@ export default canvas => {
 
         const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sonars]);
         
-        const controls = PlayerControls(player.mesh, camera, robotConfig.speed, collisionManager);
+        const controls = PlayerControls(player.mesh, camera, robotConfig, collisionManager);
 
         const sceneSubjects = [
             GeneralLights(scene),
