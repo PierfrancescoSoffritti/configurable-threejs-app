@@ -27,8 +27,8 @@ const config = {
         },
         {
             name: "static-obstacle-2",
-            centerPosition: { x: 0.8, y: 0.5},
-            size: { x: 0.3, y: 0.1}
+            centerPosition: { x: 0.1, y: 0.1},
+            size: { x: 0.1, y: 0.5}
         }
     ]
 }

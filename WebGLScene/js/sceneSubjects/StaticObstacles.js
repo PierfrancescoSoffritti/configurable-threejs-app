@@ -22,13 +22,6 @@ export default (scene, staticObstaclesConfig) => {
 		checkCollision
 	}
 }
-
-// {
-// 	name: "static-obstacle-1",
-// 	centerPosition: { x: 1, y: 1},
-// 	size: { x: 1, y: 1}
-// }
-
 function StaticObstacle(scene, config) {
 
 	const geometry = new THREE.BoxBufferGeometry( config.size.x, 4, config.size.y);
@@ -55,7 +48,7 @@ function StaticObstacle(scene, config) {
 	}
 
 	function checkCollision(position) {
-		const absPositionZ = Math.abs(position.z);
+		const absPositionZ = -(position.z);
 
 		if( ( position.x >= obstacleBoundaries.minX && position.x <= obstacleBoundaries.maxX ) &&
 			( absPositionZ >= obstacleBoundaries.minY && absPositionZ <= obstacleBoundaries.maxY ) )
