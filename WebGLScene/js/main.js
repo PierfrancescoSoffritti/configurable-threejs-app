@@ -11,11 +11,11 @@ socket.on( 'startRobot', event => eventBus.post('spawnRobot') )
 socket.on( 'moveForward', duration => moveForward(duration) )
 socket.on( 'turnRight', duration => turnRight(duration) )
 socket.on( 'turnLeft', duration => turnLeft(duration) )
-socket.on( 'alarm', duration => stopMovingForward() )
-socket.on( 'stop', duration => stopMovingForward() )
+socket.on( 'alarm', duration => stopMoving() )
+socket.on( 'stop', duration => stopMoving() )
 
 eventBus.subscribe( 'sonarActivated', sonarId => socket.emit("sonarActivated", sonarId))
-eventBus.subscribe( 'collision', () => { socket.emit("collision"); stopMovingForward() })
+eventBus.subscribe( 'collision', () => { socket.emit("collision"); stopMoving() })
 
 const W = 87
 const A = 65
@@ -24,12 +24,19 @@ const D = 68
 const R = 82
 const F = 70
 	
-let timeoutId;
+let moveForwardTimeoutId;
+let moveBackwardsTimeoutId;
 
 function moveForward(duration) {
-	clearTimeout(timeoutId);
+	clearTimeout(moveForwardTimeoutId);
 	onKeyDown( { keyCode: W } );
-	if(duration >= 0) timeoutId = setTimeout( () => onKeyUp( { keyCode: W } ), duration );
+	if(duration >= 0) moveForwardTimeoutId = setTimeout( () => onKeyUp( { keyCode: W } ), duration );
+}
+
+function moveBackwards(duration) {
+	clearTimeout(moveBackwardsTimeoutId);
+	onKeyDown( { keyCode: S } );
+	if(duration >= 0) moveBackwardsTimeoutId = setTimeout( () => onKeyUp( { keyCode: S } ), duration );
 }
 
 function turnRight(duration) {
@@ -40,8 +47,9 @@ function turnLeft(duration) {
 	onKeyDown( { keyCode: F }, duration );
 }
 
-function stopMovingForward() {
+function stopMoving() {
 	onKeyUp( { keyCode: W } );
+	onKeyUp( { keyCode: S } );
 }
 
 bindEventListeners();

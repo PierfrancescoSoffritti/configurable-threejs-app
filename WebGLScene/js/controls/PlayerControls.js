@@ -9,8 +9,9 @@ export default (mesh, camera, speed, collisionManager) => {
     const R = 82
     const F = 70
 	
-    let forward = false
-    let rotating = false
+    let forward = false;
+    let backwards = false;
+    let rotating = false;
 
     setCameraPositionRelativeToMesh(camera, mesh);
 
@@ -23,10 +24,12 @@ export default (mesh, camera, speed, collisionManager) => {
 	
 	function onKeyDown(keyCode, duration) {
         if(keyCode === W)
-            forward = true
+            forward = true;
+        else if(keyCode === S)
+            backwards = true;
         
         else if(keyCode === R)
-            rotate(-Math.PI/2, duration)
+            rotate(-Math.PI/2, duration);
         else if(keyCode === F)
             rotate(Math.PI/2, duration);
     }
@@ -34,6 +37,8 @@ export default (mesh, camera, speed, collisionManager) => {
     function onKeyUp(keyCode) {
         if(keyCode === W)
             forward = false
+        else if(keyCode === S)
+            backwards = false;
     }
 
     function rotate(angle, duration = 300) {
@@ -58,9 +63,11 @@ export default (mesh, camera, speed, collisionManager) => {
         const directionVector = new THREE.Vector3( 0, 0, 1 );
         directionVector.applyMatrix4(matrix);
     
-		if(forward) {         
-            const stepVector = directionVector.multiplyScalar(speed);
+		if(forward || backwards) {         
+            const direction = backwards ? -1 : 1;
+            const stepVector = directionVector.multiplyScalar( speed * direction );
             const tPosition = mesh.position.clone().add(stepVector);
+            
             const collision = collisionManager.checkCollision(tPosition);
 
             if(!collision) {
