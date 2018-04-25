@@ -1,5 +1,7 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
+
 import eventBus from '../eventBus/EventBus.js';
+import eventBusEvents from '../eventBus/events.js';
 
 export default (scene, sonarsConfig) => {
 
@@ -59,7 +61,7 @@ function Sonar(scene, sonarsConfig) {
         if(targetPosition.y >= sonarPosition.y -padding && targetPosition.y <= sonarPosition.y +padding) {
             
             const distance = Math.trunc( sonarPosition.x - targetPosition.x );
-            eventBus.post("sonarActivated", { sonarName, distance, axis })
+            eventBus.post(eventBusEvents.sonarActivated, { sonarName, distance, axis })
 
             return true;
         } else

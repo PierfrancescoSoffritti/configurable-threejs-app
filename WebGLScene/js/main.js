@@ -1,5 +1,6 @@
 import SceneManager from './SceneManager.js';
 import eventBus from './eventBus/EventBus.js';
+import eventBusEvents from './eventBus/events.js';
 
 const canvas = document.getElementById("canvas");
 
@@ -7,15 +8,15 @@ const sceneManager = SceneManager(canvas);
 
 const socket = io();
     
-socket.on( 'startRobot', event => eventBus.post('spawnRobot') )
+socket.on( 'startRobot', event => eventBus.post(eventBusEvents.spawnRobot) )
 socket.on( 'moveForward', duration => moveForward(duration) )
 socket.on( 'turnRight', duration => turnRight(duration) )
 socket.on( 'turnLeft', duration => turnLeft(duration) )
 socket.on( 'alarm', duration => stopMoving() )
 socket.on( 'stop', duration => stopMoving() )
 
-eventBus.subscribe( 'sonarActivated', sonarId => socket.emit("sonarActivated", sonarId))
-eventBus.subscribe( 'collision', () => { socket.emit("collision"); stopMoving() })
+eventBus.subscribe( eventBusEvents.sonarActivated, sonarId => socket.emit("sonarActivated", sonarId))
+eventBus.subscribe( eventBusEvents.collision, () => { socket.emit("collision"); stopMoving() })
 
 const W = 87
 const A = 65

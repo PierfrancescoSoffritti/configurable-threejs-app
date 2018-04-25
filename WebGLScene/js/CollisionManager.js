@@ -1,4 +1,5 @@
 import eventBus from './eventBus/EventBus.js';
+import eventBusEvents from './eventBus/events.js';
 
 export default colliders => {
 
@@ -7,7 +8,7 @@ export default colliders => {
             const collision = colliders[i].checkCollision(position);
             
             if(collision) {
-                eventBus.post("collision");
+                eventBus.post(eventBusEvents.collision);
                 return true;
             }
         }

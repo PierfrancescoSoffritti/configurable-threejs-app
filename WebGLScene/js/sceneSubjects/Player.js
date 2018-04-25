@@ -1,5 +1,8 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
+
 import eventBus from '../eventBus/EventBus.js';
+import eventBusEvents from '../eventBus/events.js';
+
 
 export default (scene, robotConfiguration) => {
 
@@ -9,9 +12,7 @@ export default (scene, robotConfiguration) => {
     const group = new THREE.Group();
     group.rotation.y = Math.PI;
     
-    group.position.x = playerPosition.x;
-    group.position.y = playerPosition.y;
-    group.position.z = playerPosition.z;
+    group.position.set(playerPosition.x, playerPosition.y, playerPosition.z);    
 
     //const positionMarker = new PositionMarker(scene, robotConfiguration);
 
@@ -20,18 +21,18 @@ export default (scene, robotConfiguration) => {
     let playerMesh;
     loadPlayerMeshAsync();
 
-    eventBus.subscribe( 'spawnRobot', () => {
+    eventBus.subscribe( eventBusEvents.spawnRobot, () => {
         new TWEEN.Tween(playerPosition)
-        .to({ y: 2 }, 1000)
-        .easing(TWEEN.Easing.Quadratic.InOut)
-        .start() 
+            .to({ y: 2 }, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .start() 
     });
 
     function loadPlayerMeshAsync() {
         const loader = new THREE.JSONLoader()
         loader.load('models/spaceship.json', function(playerGeometry, playerMaterials) {
 
-            self.materials = playerMaterials;
+            playerMaterials;
             
             for(let i=0; i<playerMaterials.length; i++) {
                 playerMaterials[i].flatShading = true
@@ -43,10 +44,8 @@ export default (scene, robotConfiguration) => {
             playerMesh = new THREE.Mesh(playerGeometry, playerMaterials);
             playerMesh.rotation.y = Math.PI/2;
             playerMesh.castShadow = true;
-            const scale = 1;
-            playerMesh.scale.set(scale, scale, scale)
-            group.add(playerMesh);
 
+            group.add(playerMesh);
             self.mesh = playerMesh;
         })
     }
@@ -75,9 +74,7 @@ function PositionMarker(scene, robotConfiguration) {
     mesh.rotation.x = -Math.PI/2
 
     const positionY = 6;
-    mesh.position.x = -robotConfiguration.position.x;
-    mesh.position.y = positionY;
-    mesh.position.z = -robotConfiguration.position.y;
+    mesh.position.set(-robotConfiguration.position.x, positionY, -robotConfiguration.position.y)
 
     scene.add(mesh);
     
