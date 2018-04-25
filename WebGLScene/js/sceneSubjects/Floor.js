@@ -1,8 +1,8 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
 
-export default (scene, ground) => {
+export default (scene, floorConfig) => {
 	
-	const floorSize = ground.size;
+	const floorSize = floorConfig.size;
 
 	const geometry = new THREE.BoxBufferGeometry( floorSize.x, 1, floorSize.y);
 	const material = new THREE.MeshStandardMaterial( {color: "#91B82D", roughness: 0.5, metalness: 0.1} );

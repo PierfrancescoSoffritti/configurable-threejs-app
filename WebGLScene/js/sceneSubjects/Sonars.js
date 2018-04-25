@@ -1,5 +1,5 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
-import eventBus from '../EventBus.js';
+import eventBus from '../eventBus/EventBus.js';
 
 export default (scene, sonarsConfig) => {
 
@@ -52,7 +52,6 @@ function Sonar(scene, sonarsConfig) {
         if(sonarsConfig.senseAxis.y)
             sensedY = sense( { x: position.z, y: position.x }, { x: sonarsConfig.position.y, y: sonarsConfig.position.x }, padding, "y", sonarsConfig.name )
                     
-
         return false;
     }
     

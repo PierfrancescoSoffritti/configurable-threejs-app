@@ -1,5 +1,5 @@
 const config = {
-    ground: {
+    floor: {
         size: { x: 40, y: 40 }
     },
     robot: {
@@ -51,31 +51,31 @@ const config = {
 export default parseConfig(config)
 
 function parseConfig(config) {
-    const { ground, robot, sonars, movingObstacles, staticObstacles } = config;
+    const { floor, robot, sonars, movingObstacles, staticObstacles } = config;
 
-    robot.position.x = ( robot.position.x - 0.5 ) * ground.size.x;
-    robot.position.y = ( robot.position.y - 0.5 ) * ground.size.y;
+    robot.position.x = ( robot.position.x - 0.5 ) * floor.size.x;
+    robot.position.y = ( robot.position.y - 0.5 ) * floor.size.y;
 
     sonars.forEach( sonar => {
-        sonar.position.x = ( sonar.position.x - 0.5 ) * ground.size.x;
-        sonar.position.y = ( sonar.position.y - 0.5 ) * ground.size.y;
+        sonar.position.x = ( sonar.position.x - 0.5 ) * floor.size.x;
+        sonar.position.y = ( sonar.position.y - 0.5 ) * floor.size.y;
     });
 
     movingObstacles.forEach( obstacle => {
-        obstacle.position.x = ( obstacle.position.x - 0.5 ) * ground.size.x;
-        obstacle.position.y = ( obstacle.position.y - 0.5 ) * ground.size.y;
+        obstacle.position.x = ( obstacle.position.x - 0.5 ) * floor.size.x;
+        obstacle.position.y = ( obstacle.position.y - 0.5 ) * floor.size.y;
     });
 
     staticObstacles.forEach( obstacle => {
-        obstacle.centerPosition.x = ( obstacle.centerPosition.x - 0.5 ) * ground.size.x;
-        obstacle.centerPosition.y = ( obstacle.centerPosition.y - 0.5 ) * ground.size.y;
+        obstacle.centerPosition.x = ( obstacle.centerPosition.x - 0.5 ) * floor.size.x;
+        obstacle.centerPosition.y = ( obstacle.centerPosition.y - 0.5 ) * floor.size.y;
                 
-        obstacle.size.x *= ground.size.x;
-        obstacle.size.y *= ground.size.y;
+        obstacle.size.x *= floor.size.x;
+        obstacle.size.y *= floor.size.y;
     });
 
     return {
-        ground,
+        floor,
         robot,
         sonars,
         movingObstacles,

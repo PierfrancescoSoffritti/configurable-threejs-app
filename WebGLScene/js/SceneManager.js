@@ -53,7 +53,7 @@ export default canvas => {
         return renderer;
     }
 
-    function buildCamera({ width, height }, {ground}) {
+    function buildCamera({ width, height }, {floor}) {
         const aspectRatio = width / height;
         const fieldOfView = 60;
         const nearPlane = 1;
@@ -66,13 +66,13 @@ export default canvas => {
     }
 
     function createSceneSubjects(scene, sceneConstants, camera) {
-        const groundConfig = sceneConstants.ground;
+        const floorConfig = sceneConstants.floor;
         const robotConfig = sceneConstants.robot;
         const staticObstaclesConfig = sceneConstants.staticObstacles;
         const movingObstaclesConfig = sceneConstants.movingObstacles;
         const sonarsConfig = sceneConstants.sonars;
 
-        const floor = Floor(scene, groundConfig);
+        const floor = Floor(scene, floorConfig);
         const player = Player(scene, robotConfig);
         const staticObstacles = StaticObstacles(scene, staticObstaclesConfig);
         const movingObstacles = MovingObstacles(scene, movingObstaclesConfig);

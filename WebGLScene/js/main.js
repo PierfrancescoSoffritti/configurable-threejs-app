@@ -1,5 +1,5 @@
 import SceneManager from './SceneManager.js';
-import eventBus from './EventBus.js';
+import eventBus from './eventBus/EventBus.js';
 
 const canvas = document.getElementById("canvas");
 

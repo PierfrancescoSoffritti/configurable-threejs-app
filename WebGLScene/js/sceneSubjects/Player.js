@@ -1,5 +1,5 @@
 import * as THREE from '../../node_modules/three/build/three.module.js';
-import eventBus from '../EventBus.js';
+import eventBus from '../eventBus/EventBus.js';
 
 export default (scene, robotConfiguration) => {
 

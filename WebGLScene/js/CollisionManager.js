@@ -1,4 +1,4 @@
-import eventBus from './EventBus.js';
+import eventBus from './eventBus/EventBus.js';
 
 export default colliders => {
 
@@ -8,7 +8,6 @@ export default colliders => {
             
             if(collision) {
                 eventBus.post("collision");
-                console.log("cooll")
                 return true;
             }
         }
