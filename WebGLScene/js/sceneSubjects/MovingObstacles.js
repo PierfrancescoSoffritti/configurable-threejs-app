@@ -23,12 +23,6 @@ export default (scene, movingObstaclesConfig) => {
 	}
 }
 
-// {
-// 	name: "moving-obstacle-1",
-// 	position: { x: 1, y: 1},
-// 	directionAxis: { x: 1, y: 0}
-// }
-
 function MovingObstacle(scene, config) {
 	const obstacleRadius = 1;
 	const detail = 2;
@@ -46,6 +40,7 @@ function MovingObstacle(scene, config) {
     
 	function update(time) {
 		const sin = Math.sin(time * config.speed )*config.range;
+
 		if(config.directionAxis.x)
 			obstacle.position.x = config.position.x + sin;
 		if(config.directionAxis.y)
@@ -53,10 +48,10 @@ function MovingObstacle(scene, config) {
 	}
 
 	function checkCollision(position) {
-        // if(position.distanceTo( obstacle.position) < obstacleRadius*3)
-		// 	return true;
-
-		return false;
+        if(position.distanceTo( obstacle.position) < obstacleRadius*3)
+			return true;
+		else
+			return false;
 	}
 
 	return {

@@ -3,30 +3,30 @@ const config = {
         size: { x: 40, y: 40 }
     },
     robot: {
-        position: { x: 0.5, y: 0.8 }
+        position: { x: 0.1, y: 0.8 }
     },
-    sensors: [
+    sonars: [
         {
-            name: "sensor-1",
+            name: "sonar-1",
             position: { x: 1, y: 1 },
             senseAxis: { x: true, y: false }
         }
     ],
     movingObstacles: [
-        {
-            name: "moving-obstacle-1",
-            position: { x: 1, y: 1 },
-            directionAxis: { x: true, y: false },
-            speed: 1,
-            range: 1
-        },
-        {
-            name: "moving-obstacle-2",
-            position: { x: 0, y: 0 },
-            directionAxis: { x: false, y: true },
-            speed: 2,
-            range: 4
-        }
+        // {
+        //     name: "moving-obstacle-1",
+        //     position: { x: .5, y: .5 },
+        //     directionAxis: { x: true, y: false },
+        //     speed: 1,
+        //     range: 4
+        // },
+        // {
+        //     name: "moving-obstacle-2",
+        //     position: { x: 0, y: 0 },
+        //     directionAxis: { x: false, y: true },
+        //     speed: 2,
+        //     range: 4
+        // }
     ],
     staticObstacles: [
         // {
@@ -45,23 +45,23 @@ const config = {
 export default parseConfig(config)
 
 function parseConfig(config) {
-    const { ground, robot, sensors, movingObstacles, staticObstacles } = config;
+    const { ground, robot, sonars, movingObstacles, staticObstacles } = config;
 
-    robot.position.x = ( robot.position.x - 0.5 ) * ground.size.x
+    robot.position.x = ( robot.position.x - 0.5 ) * ground.size.x;
     robot.position.y = ( robot.position.y - 0.5 ) * ground.size.y;
 
-    sensors.forEach( sensor => {
-        sensor.position.x = ( sensor.position.x - 0.5 ) * ground.size.x
-        sensor.position.y = ( sensor.position.y - 0.5 ) * ground.size.y;
+    sonars.forEach( sonar => {
+        sonar.position.x = ( sonar.position.x - 0.5 ) * ground.size.x;
+        sonar.position.y = ( sonar.position.y - 0.5 ) * ground.size.y;
     });
 
     movingObstacles.forEach( obstacle => {
-        obstacle.position.x = ( obstacle.position.x - 0.5 ) * ground.size.x
+        obstacle.position.x = ( obstacle.position.x - 0.5 ) * ground.size.x;
         obstacle.position.y = ( obstacle.position.y - 0.5 ) * ground.size.y;
     });
 
     staticObstacles.forEach( obstacle => {
-        obstacle.centerPosition.x = ( obstacle.centerPosition.x - 0.5 ) * ground.size.x
+        obstacle.centerPosition.x = ( obstacle.centerPosition.x - 0.5 ) * ground.size.x;
         obstacle.centerPosition.y = ( obstacle.centerPosition.y - 0.5 ) * ground.size.y;
                 
         obstacle.size.x *= ground.size.x;
@@ -71,7 +71,7 @@ function parseConfig(config) {
     return {
         ground,
         robot,
-        sensors,
+        sonars,
         movingObstacles,
         staticObstacles
     }

@@ -70,15 +70,16 @@ export default canvas => {
         const robotConfig = sceneConstants.robot;
         const staticObstaclesConfig = sceneConstants.staticObstacles;
         const movingObstaclesConfig = sceneConstants.movingObstacles;
+        const sonarsConfig = sceneConstants.sonars;
 
         const floor = Floor(scene, groundConfig);
         const player = Player(scene, robotConfig);
         const staticObstacles = StaticObstacles(scene, staticObstaclesConfig);
         const movingObstacles = MovingObstacles(scene, movingObstaclesConfig);
-        //const sensors = Sonars(scene, player.mesh.position, ground.size.x);
+        const sonars = Sonars(scene, sonarsConfig);
 
-        //const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sensors]);
-        const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles]);
+        const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sonars]);
+        
         const controls = PlayerControls(player.mesh, camera, collisionManager);
 
         const sceneSubjects = [
@@ -86,7 +87,7 @@ export default canvas => {
             floor,
             staticObstacles,
             movingObstacles,
-            //sensors,
+            sonars,
             player,
             controls
         ];
