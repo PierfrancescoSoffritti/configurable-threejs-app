@@ -64,11 +64,13 @@ export default (mesh, camera, collisionManager) => {
             const stepVector = directionVector.multiplyScalar(speed);
             const tPosition = mesh.position.clone().add(stepVector);
             const collision = collisionManager.checkCollision(tPosition);
+
             if(!collision) {
                 mesh.position.add(stepVector)
                 camera.position.add(stepVector)
              }            
-        }
+        } else 
+            collisionManager.checkCollision(mesh.position);
 	}
 	
 	return {

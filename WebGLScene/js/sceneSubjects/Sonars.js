@@ -24,12 +24,6 @@ export default (scene, sonarsConfig) => {
 	}
 }
 
-// {
-//     name: "sonar-1",
-//     position: { x: 1, y: 1 },
-//     senseAxis: { x: true, y: false }
-// }
-
 function Sonar(scene, sonarsConfig) {
     const size = 2;
 
@@ -42,24 +36,44 @@ function Sonar(scene, sonarsConfig) {
     mesh.position.set( sonarsConfig.position.x, size/1.5, sonarsConfig.position.y );
 
     scene.add( mesh );
+
+    let sensed = false;
+    const padding = 1.5;
 	
-	function update(time) {        
-        
-	}
+	function update(time) {       
+        updateColor(sensed, mesh.material); 
+    }
 
 	function checkCollision(position) {
-        if(position.x >= mesh.position.x-1 && position.x <= mesh.position.x+1) {
-            const distance = Math.trunc( mesh.position.z - position.z );
-            eventBus.post("sonarActivated", { sonarName: sonarsConfig.name, distance })
-            if(mesh.material.color.r < 3)
-            mesh.material.color.r += 0.2;
-        } else {
-            if(mesh.material.color.r > material.redChannel)
-                mesh.material.color.r -= 0.2;
-        }
+    
+        if(sonarsConfig.senseAxis.x) 
+            sensed = sense( { x: position.x, y: position.z }, { x: sonarsConfig.position.x, y: sonarsConfig.position.y }, padding, "x", sonarsConfig.name )
+
+        if(sonarsConfig.senseAxis.y)
+            sensed = 
+                sense( { x: position.z, y: position.x }, { x: sonarsConfig.position.y, y: sonarsConfig.position.x }, padding, "y", sonarsConfig.name )
+                    ? true : sensed;
 
         return false;
-	}
+    }
+    
+    function sense(targetPosition, sonarPosition, padding, axis, sonarName) {
+        if(targetPosition.y >= sonarPosition.y -padding && targetPosition.y <= sonarPosition.y +padding) {
+            
+            const distance = Math.trunc( sonarPosition.x - targetPosition.x );
+            eventBus.post("sonarActivated", { sonarName, distance, axis })
+
+            return true;
+        } else
+            return false;
+    }
+
+    function updateColor(sensed, material) {
+        if( sensed && material.color.r < 3 )
+            material.color.r += 0.2;
+        else if( material.color.r > material.redChannel )
+            material.color.r -= 0.2;
+    }
 
 	return {
 		update,
