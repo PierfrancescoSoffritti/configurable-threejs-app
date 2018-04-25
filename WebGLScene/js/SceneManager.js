@@ -77,7 +77,7 @@ export default canvas => {
         //const sensors = Sonars(scene, player.mesh.position, ground.size.x);
 
         //const collisionManager = CollisionManager([floor, staticObstacles, movingObstacles, sensors]);
-        const collisionManager = CollisionManager([floor]);
+        const collisionManager = CollisionManager([floor, staticObstacles]);
         const controls = PlayerControls(player.mesh, camera, collisionManager);
 
         const sceneSubjects = [

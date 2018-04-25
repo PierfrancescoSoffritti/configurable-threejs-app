@@ -40,15 +40,27 @@ function StaticObstacle(scene, config) {
 	obstacle.position.y = 2;
 	obstacle.position.z = -config.centerPosition.y;
 
+	const padding = 2;
+	const obstacleBoundaries = {
+		minX: config.centerPosition.x - config.size.x/2 -padding,
+		maxX: config.centerPosition.x + config.size.x/2 +padding,
+
+		minY: config.centerPosition.y - config.size.y/2 -padding,
+		maxY: config.centerPosition.y + config.size.y/2 +padding
+	}
+
     scene.add( obstacle );
 	
 	function update(time) {
 	}
 
 	function checkCollision(position) {
-		//if( Math.abs(position.x) <= obstacle1.position.x+obstacleWidth*2  && Math.abs(position.z) >= obstacle1.position.z-obstacleLength/2 )
-			//return true;
-		//else
+		const absPositionZ = Math.abs(position.z);
+
+		if( ( position.x >= obstacleBoundaries.minX && position.x <= obstacleBoundaries.maxX ) &&
+			( absPositionZ >= obstacleBoundaries.minY && absPositionZ <= obstacleBoundaries.maxY ) )
+			return true;
+		else
 			return false;
 	}
 
