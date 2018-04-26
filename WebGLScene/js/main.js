@@ -1,10 +1,10 @@
 import SceneManager from './SceneManager.js'
-import SocketIO from './SocketIO.js'
+import initSocketIO from './SocketIO.js'
 
 import eventBus from './eventBus/EventBus.js'
 import eventBusEvents from './eventBus/events.js'
 
-const socketIO = SocketIO(onKeyUp, onKeyDown)
+initSocketIO(onKeyUp, onKeyDown)
 
 const canvas = document.getElementById('canvas')
 const sceneManager = SceneManager(canvas)
