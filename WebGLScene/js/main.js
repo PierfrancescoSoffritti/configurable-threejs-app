@@ -10,7 +10,6 @@ const sceneManager = SceneManager(canvas);
 
 const socket = io();
     
-socket.on( 'startRobot', event => eventBus.post(eventBusEvents.spawnRobot) )
 socket.on( 'moveForward', duration => moveForward(duration) )
 socket.on( 'turnRight', duration => turnRight(duration) )
 socket.on( 'turnLeft', duration => turnLeft(duration) )
@@ -18,7 +17,7 @@ socket.on( 'alarm', duration => stopMoving() )
 socket.on( 'stop', duration => stopMoving() )
 
 eventBus.subscribe( eventBusEvents.sonarActivated, sonarId => socket.emit("sonarActivated", sonarId))
-eventBus.subscribe( eventBusEvents.collision, objectName => { console.log(`collision with: ${objectName}`); socket.emit("collision"); stopMoving(); })
+eventBus.subscribe( eventBusEvents.collision, objectName => { console.log(`collision with: ${objectName}`); socket.emit("collision", objectName); stopMoving(); })
 
 const W = 87
 const A = 65
@@ -92,16 +91,13 @@ function render(time) {
 function initPlug() {
 	const plugDiv = document.getElementById("plug");
 	const icons = [
-		document.getElementById("firetruck"),
-		document.getElementById("forklift"),
-		document.getElementById("lamp"),
-		document.getElementById("internet-explorer"),
-		document.getElementById("towing"),
-		document.getElementById("tractor"),
-		document.getElementById("washing-machine"),
-		document.getElementById("fork"),
-		document.getElementById("shovel"),
-		document.getElementById("carrot"),
+		document.getElementById("forklift-icon"),
+		document.getElementById("lamp-icon"),
+		document.getElementById("tractor-icon"),
+		document.getElementById("washing-machine-icon"),
+		document.getElementById("fork-icon"),
+		document.getElementById("shovel-icon"),
+		document.getElementById("carrot-icon"),
 	]
 	plugDiv.insertBefore(icons[getRandomInt(0, icons.length-1)], plugDiv.children[1]);
 }

@@ -11,10 +11,6 @@ function WebpageServer(callbacks) {
     app.use(express.static('./../../WebGLScene'))
     startServer(callbacks);
 
-    this.spawn = function() {
-        Object.keys(sockets).forEach( key => sockets[key].emit("spawnRobot") )
-    }
-
     this.moveForward = function(duration) {
         Object.keys(sockets).forEach( key => sockets[key].emit("moveForward", duration) )
     }
@@ -51,10 +47,11 @@ function startServer(callbacks) {
         callbacks.onWebpageReady();
 
         socket.on( 'sonarActivated', msg => callbacks.onSonarActivated(msg) );
-        socket.on( 'collision', () => callbacks.onCollision() );
+        socket.on( 'collision', objectName => callbacks.onCollision(objectName) );
     });
       
-    http.listen(8080, () => console.log('listening on localhost:8080') );
+    //http.listen(8080, () => console.log('listening on localhost:8080') );
+    http.listen(8080);
 }
 
 function finish() {

@@ -18,13 +18,6 @@ export default (scene, robotConfiguration) => {
     let playerMesh;
     loadPlayerMeshAsync();
 
-    eventBus.subscribe( eventBusEvents.spawnRobot, () => {
-        new TWEEN.Tween(playerPosition)
-            .to({ y: 2 }, 1000)
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .start() 
-    });
-
     function loadPlayerMeshAsync() {
         const loader = new THREE.JSONLoader()
         loader.load('models/spaceship.json', function(playerGeometry, playerMaterials) {
