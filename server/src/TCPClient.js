@@ -1,6 +1,6 @@
 const net = require('net');
 
-const SEPARATOR = "$$SEP$$";
+const SEPARATOR = "__endofmessage__";
 
 new Communicator({port: 8900, ip: "localhost"})
 
@@ -38,7 +38,7 @@ function Communicator({ port, ip }) {
 
     this.send = function(message) {
         if(!clientSocket.connecting)
-            clientSocket.write( JSON.stringify(message) +SEPARATOR);
+            clientSocket.write( message +SEPARATOR);
         else {
             console.log(`\tSocket not created, message added to queue`);
             outQueue.push(message);
@@ -59,7 +59,6 @@ function Communicator({ port, ip }) {
         }
     }
 
-    const msg = `{ "moveForward": 1000 }`;
+    const msg = `{ "name": "moveForward", "arg": 1000 }`;
     this.send(msg);
-    console.log(JSON.parse(msg))
 }

@@ -1,10 +1,13 @@
 const net = require('net');
 
-const SEPARATOR = "$$SEP$$";
+const SEPARATOR = "__endofmessage__";
 const connectedClients = {};
 
-function TCPServer() {
-    this.start = function(port) {    
+function TCPServer(port, onMessage) {
+    
+    start(port);
+
+    function start(port) {    
         const server = net.createServer( socket => {
             const clientId = `${socket.remoteAddress}`;
 
@@ -12,12 +15,12 @@ function TCPServer() {
 
             connectedClients[clientId] = socket;
 
-            socket.on('data', message => {            
+            socket.on('data', message => {      
                 String(message)
                     .split(SEPARATOR)
-                    .filter(string => string.trim().length !== 0)
-                    .map(message => JSON.parse(JSON.parse(message)) )
-                    .forEach( message => console.log(message) )
+                    .filter( string => string.trim().length !== 0 )
+                    .map( message => JSON.parse(message) )
+                    .forEach( message => onMessage(message) )
             });
 
             socket.on('end', () => {
