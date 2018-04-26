@@ -5,3 +5,75 @@ html, body {
     overflow: hidden;
     margin: 0;
 }
+
+svg {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.shameless-plug {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    font-size: 15px;
+    font-family: "Courier New", sans-serif;
+    letter-spacing: -1px;
+
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+
+    -webkit-animation: color-change 10000ms infinite;
+    -moz-animation: color-change 10000ms infinite;
+    -o-animation: color-change 10000ms infinite;
+    -ms-animation: color-change 10000ms infinite;
+    animation: color-change 10000ms infinite;
+}
+
+@-webkit-keyframes color-change {
+    0% { color: #2196F3; }
+    25% { color: #4CAF50; }
+    50% { color: #FFC107; }
+    75% { color: #FF5722; }
+    100% { color: #2196F3; }
+}
+
+@-moz-keyframes color-change {
+    0% { color: #2196F3; }
+    25% { color: #4CAF50; }
+    50% { color: #FFC107; }
+    75% { color: #FF5722; }
+    100% { color: #2196F3; }
+}
+
+@-ms-keyframes color-change {
+    0% { color: #2196F3; }
+    25% { color: #4CAF50; }
+    50% { color: #FFC107; }
+    75% { color: #FF5722; }
+    100% { color: #2196F3; }
+}
+
+@-o-keyframes color-change {
+    0% { color: #2196F3; }
+    25% { color: #4CAF50; }
+    50% { color: #FFC107; }
+    75% { color: #FF5722; }
+    100% { color: #2196F3; }
+}
+
+@keyframes color-change {
+    0% { color: #2196F3; }
+    25% { color: #4CAF50; }
+    50% { color: #FFC107; }
+    75% { color: #FF5722; }
+    100% { color: #2196F3; }
+}

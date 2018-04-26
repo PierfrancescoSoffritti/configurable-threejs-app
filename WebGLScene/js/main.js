@@ -2,6 +2,8 @@ import SceneManager from './SceneManager.js';
 import eventBus from './eventBus/EventBus.js';
 import eventBusEvents from './eventBus/events.js';
 
+initPlug();
+
 const canvas = document.getElementById("canvas");
 
 const sceneManager = SceneManager(canvas);
@@ -85,4 +87,24 @@ function render(time) {
     requestAnimationFrame(render);
 	sceneManager.update();
 	TWEEN.update(time);
+}
+
+function initPlug() {
+	const plugDiv = document.getElementById("plug");
+	const icons = [
+		document.getElementById("firetruck"),
+		document.getElementById("forklift"),
+		document.getElementById("lamp"),
+		document.getElementById("internet-explorer"),
+		document.getElementById("tower-fire"),
+		document.getElementById("towing"),
+		document.getElementById("tram"),
+		document.getElementById("tractor"),
+		document.getElementById("washing-machine"),
+		document.getElementById("fork"),
+		document.getElementById("shovel"),
+		document.getElementById("highway"),
+		document.getElementById("carrot"),
+	]
+	plugDiv.insertBefore(icons[getRandomInt(0, icons.length-1)], plugDiv.children[1]);
 }
