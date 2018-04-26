@@ -1,5 +1,5 @@
-import eventBus from './eventBus/EventBus.js'
-import eventBusEvents from './eventBus/events.js'
+import eventBus from '../eventBus/EventBus.js'
+import eventBusEvents from '../eventBus/events.js'
 
 export default colliders => {
     function checkCollision(position) {

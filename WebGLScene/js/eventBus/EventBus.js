@@ -14,7 +14,7 @@ function EventBus() {
         const eventCallbacksPair = findEventCallbacksPair(eventType)
         
         if(!eventCallbacksPair) {
-            console.error("no subscribers for event " +eventType)
+            console.error(`no subscribers for event ${eventType}`)
             return;
         }
 

@@ -1,7 +1,7 @@
 import * as THREE from '../../node_modules/three/build/three.module.js'
 
 export default scene => {
-	const spotLight = new THREE.SpotLight( 0xffffff, 0.5 )
+	const spotLight = new THREE.SpotLight( '#fff', 0.5 )
 	spotLight.castShadow = true
 	spotLight.shadow.mapSize.width = 1024
 	spotLight.shadow.mapSize.height = 1024

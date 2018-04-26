@@ -3,7 +3,6 @@ import * as THREE from '../../node_modules/three/build/three.module.js'
 import eventBus from '../eventBus/EventBus.js'
 import eventBusEvents from '../eventBus/events.js'
 
-
 export default (scene, robotConfiguration) => {
     const playerPosition = { x: robotConfiguration.position.x, y: 2, z: robotConfiguration.position.y }
 

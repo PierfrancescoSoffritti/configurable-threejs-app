@@ -6,11 +6,11 @@ import StaticObstacles from './sceneSubjects/StaticObstacles.js'
 import MovingObstacles from './sceneSubjects/MovingObstacles.js'
 import Player from './sceneSubjects/Player.js'
 import PlayerControls from './controls/PlayerControls.js'
-import CollisionManager from './CollisionManager.js'
+import CollisionManager from './controls/CollisionManager.js'
 import Sonars from './sceneSubjects/Sonars.js'
 
 import sceneConfiguration from '../sceneConfig.js'
-import { parseConfiguration, mapConfigurationToGUI } from './SceneConfigUtils.js'
+import { parseConfiguration, mapConfigurationToGUI } from './utils/SceneConfigUtils.js'
 
 import dat from '../node_modules/dat.gui/build/dat.gui.module.js'
 
@@ -34,7 +34,7 @@ export default canvas => {
 
     function buildScene() {
         const scene = new THREE.Scene()
-        scene.background = new THREE.Color("#000")
+        scene.background = new THREE.Color('#000')
         return scene
     }
 

@@ -30,7 +30,7 @@ function MovingObstacle(scene, config) {
 	const detail = 2
 
 	const geometry = new THREE.IcosahedronBufferGeometry(obstacleRadius, detail)
-	const material = new THREE.MeshStandardMaterial( {color: "#F44336", roughness: 0.1, metalness: 0.1} )
+	const material = new THREE.MeshStandardMaterial( {color: '#F44336', roughness: 0.1, metalness: 0.1} )
 	const obstacle = new THREE.Mesh( geometry, material )
 	obstacle.castShadow = true
 

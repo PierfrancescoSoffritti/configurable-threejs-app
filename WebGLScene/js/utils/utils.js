@@ -1,6 +1,6 @@
 function getRandom(min, max) {
     if(min >= max)
-        console.error("getRandom error: min >= max")
+        console.error('getRandom error: min >= max')
 
     return Math.random() * (max - min) + min
 }

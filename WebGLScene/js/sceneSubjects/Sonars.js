@@ -32,11 +32,10 @@ function Sonar(scene, config) {
     const size = 2
 
 	const geometry = new THREE.BoxBufferGeometry( size, size, size )
-    const material = new THREE.MeshStandardMaterial( {color: "#45B045", roughness: 0.5, metalness: 0.1} )
+    const material = new THREE.MeshStandardMaterial( {color: '#45B045', roughness: 0.5, metalness: 0.1} )
     material.redChannel = material.color.r
     const mesh = new THREE.Mesh( geometry, material )
     mesh.castShadow = true
-
     scene.add( mesh )
 
     let sensedX, sensedY = false
@@ -49,12 +48,12 @@ function Sonar(scene, config) {
 
 	function checkCollision(position) {
         if(config.senseAxis.x) 
-            sensedX = sense( { x: position.x, y: position.z }, { x: config.position.x, y: config.position.y }, padding, "x", config.name )
+            sensedX = sense( { x: position.x, y: position.z }, { x: config.position.x, y: config.position.y }, padding, 'x', config.name )
         else
             sensedX = false
 
         if(config.senseAxis.y)
-            sensedY = sense( { x: position.z, y: position.x }, { x: config.position.y, y: config.position.x }, padding, "y", config.name )
+            sensedY = sense( { x: position.z, y: position.x }, { x: config.position.y, y: config.position.x }, padding, 'y', config.name )
         else
             sensedY = false
                     

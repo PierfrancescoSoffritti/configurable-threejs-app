@@ -27,10 +27,9 @@ export default (scene, staticObstaclesConfig) => {
 
 function StaticObstacle(scene, config) {
 	const geometry = new THREE.BoxBufferGeometry( 1, 4, 1)
-	const material = new THREE.MeshStandardMaterial( {color: "#269C26", roughness: 0.5, metalness: 0.1} )
+	const material = new THREE.MeshStandardMaterial( {color: '#269C26', roughness: 0.5, metalness: 0.1} )
 	const mesh = new THREE.Mesh( geometry, material )
 	mesh.castShadow = true
-
 	scene.add(mesh)
 
 	const padding = 2
