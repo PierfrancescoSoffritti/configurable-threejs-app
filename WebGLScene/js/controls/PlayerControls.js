@@ -2,12 +2,14 @@ import * as THREE from '../../node_modules/three/build/three.module.js'
 
 export default (mesh, camera, config, collisionManager) => {
 	
-	const W = 87
-    const A = 65
-    const S = 83
-    const D = 68
-    const R = 82
-    const F = 70
+	const keycodes = {
+        W: 87,
+        A: 65,
+        S: 83,
+        D: 68,
+        R: 82,
+        F: 70
+    }
 	
     let forward = false
     let backwards = false
@@ -16,21 +18,21 @@ export default (mesh, camera, config, collisionManager) => {
     setCameraPositionRelativeToMesh(camera, mesh)
 	
 	function onKeyDown(keyCode, duration) {
-        if(keyCode === W)
+        if(keyCode === keycodes.W)
             forward = true
-        else if(keyCode === S)
+        else if(keyCode === keycodes.S)
             backwards = true
         
-        else if(keyCode === R)
+        else if(keyCode === keycodes.R)
             rotate(-Math.PI/2, duration)
-        else if(keyCode === F)
+        else if(keyCode === keycodes.F)
             rotate(Math.PI/2, duration)
     }
 
     function onKeyUp(keyCode) {
-        if(keyCode === W)
+        if(keyCode === keycodes.W)
             forward = false
-        else if(keyCode === S)
+        else if(keyCode === keycodes.S)
             backwards = false;
     }
 
