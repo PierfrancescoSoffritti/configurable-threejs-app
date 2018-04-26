@@ -10,7 +10,7 @@ import CollisionManager from './CollisionManager.js';
 import Sonars from './sceneSubjects/Sonars.js';
 
 import sceneConfiguration from '../sceneConfig.js';
-import { parseConfiguration, mapConfigurationToGUI } from './SceneConstantsUtils.js';
+import { parseConfiguration, mapConfigurationToGUI } from './SceneConfigUtils.js';
 
 import dat from '../node_modules/dat.gui/build/dat.gui.module.js';
 

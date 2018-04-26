@@ -43,9 +43,4 @@ function initSocketIOServer(callbacks) {
     })
 }
 
-function finish() {
-    Object.keys(sockets).forEach( key => sockets[key].disconnect() )
-    http.close()
-}
-
 module.exports = WebpageServer
