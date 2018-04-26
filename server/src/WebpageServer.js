@@ -1,57 +1,48 @@
 const app = require('express')();
 const express = require('express');
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const socketIO = require('socket.io')(http);
 
-const id = "applicationSpecificLogic";
 const sockets = {};
-let count = 0;
+let socketCount = -1;
 
 function WebpageServer(callbacks) {
-    app.use(express.static('./../../WebGLScene'))
     startServer(callbacks);
 
-    this.moveForward = function(duration) {
-        Object.keys(sockets).forEach( key => sockets[key].emit("moveForward", duration) )
-    }
-
-    this.moveBackwards = function(duration) {
-        Object.keys(sockets).forEach( key => sockets[key].emit("moveBackwards", duration) )
-    }
-
-    this.turnRight = function(duration) {
-        Object.keys(sockets).forEach( key => sockets[key].emit("turnRight", duration) )
-    }
-
-    this.turnLeft = function(duration) {
-        Object.keys(sockets).forEach( key => sockets[key].emit("turnLeft", duration) )
-    }
-
-    this.alarm = function() {
-        Object.keys(sockets).forEach( key => sockets[key].emit("alarm") )
-    }
-
-    this.stop = function() {
-        Object.keys(sockets).forEach( key => sockets[key].emit("stop") )
-    }
+    this.moveForward = duration => Object.keys(sockets).forEach( key => sockets[key].emit('moveForward', duration) );
+    this.moveBackwards = duration => Object.keys(sockets).forEach( key => sockets[key].emit('moveBackwards', duration) );
+    this.turnRight = duration => Object.keys(sockets).forEach( key => sockets[key].emit('turnRight', duration) );
+    this.turnLeft = duration => Object.keys(sockets).forEach( key => sockets[key].emit('turnLeft', duration) );
+    this.alarm = () => Object.keys(sockets).forEach( key => sockets[key].emit('alarm') );
+    this.stop = () => Object.keys(sockets).forEach( key => sockets[key].emit('stop') );
 }
 
 function startServer(callbacks) {
-    app.get('/', (req, res) => res.sendFile('index.html', { root: "./../../WebGLScene" }) );    
+    startHttpServer();
+    initSocketIOServer(callbacks);
+}
 
-    io.on('connection', socket => {
-        const key = count;
+function startHttpServer() {
+    app.use(express.static('./../../WebGLScene'));
+    app.get('/', (req, res) => res.sendFile('index.html', { root: './../../WebGLScene' }) ); 
+
+    http.listen(8080);
+}
+
+function initSocketIOServer(callbacks) {
+    socketIO.on('connection', socket => {
+        console.log("webpage in")
+        socketCount++;
+        const key = socketCount;
         sockets[key] = socket;
-        count++;
         
         callbacks.onWebpageReady();
 
-        socket.on( 'sonarActivated', msg => callbacks.onSonarActivated(msg) );
-        socket.on( 'collision', objectName => callbacks.onCollision(objectName) );
+        socket.on( 'sonarActivated', callbacks.onSonarActivated );
+        socket.on( 'collision', callbacks.onCollision );
+
+        socket.on('disconnect', () => delete sockets[key] );
     });
-      
-    //http.listen(8080, () => console.log('listening on localhost:8080') );
-    http.listen(8080);
 }
 
 function finish() {

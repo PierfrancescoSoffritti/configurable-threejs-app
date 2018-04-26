@@ -3,28 +3,10 @@ const TCPServer = require('./TCPServer');
 
 const portNumber = readPortNumberFromArguments();
 
-function onWebpageReady() {
-    const event = { event: 'webpage-ready' };
-    console.log( event );
-    tcpServer.send(event);
-}
-
-function onSonarActivated(msg) {
-    const event = { event: 'sonarActivated', ...msg };
-    console.log(event);
-    tcpServer.send(event);
-}
-
-function onCollision(objectName) {
-    const event = { event: 'collision', objectName };
-    console.log(event);
-    tcpServer.send(event);
-}
-
 const webpageCallbacks = {
-    onWebpageReady,
-    onSonarActivated,
-    onCollision
+    onWebpageReady: () => tcpServer.send( { event: 'webpage-ready' } ),
+    onSonarActivated: object => tcpServer.send( { event: 'sonarActivated', ...object } ),
+    onCollision: objectName => tcpServer.send( { event: 'collision', objectName } )
 }
 
 const webpageServer = new WebpageServer(webpageCallbacks);
