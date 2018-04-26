@@ -19,7 +19,7 @@ export default (mesh, camera, config, collisionManager) => {
         camera.position.x = mesh.position.x;
         camera.position.z = mesh.position.z + 20;
 
-        camera.lookAt(mesh.position);
+        camera.lookAt(new THREE.Vector3(mesh.position.x, 0, mesh.position.z));
     }
 	
 	function onKeyDown(keyCode, duration) {

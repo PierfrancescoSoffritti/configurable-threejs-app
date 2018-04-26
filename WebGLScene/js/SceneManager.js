@@ -43,10 +43,12 @@ export default canvas => {
             } else {
                 let controller;
 
+                const scale = ( ( key === 'x' || key === 'y' ) && folder.parent.name !== 'floor' ) ? 1 : 100;
+
                 if(folder)
-                    controller = folder.add( object, key );
+                    controller = folder.add( object, key, 0, 1 *scale );
                 else
-                    controller = datGui.add( object, key );
+                    controller = datGui.add( object, key, 0, 1 *scale );
 
                 controller.onChange( value => { 
                     updateSceneConstants(sceneConstants, parseConfig(sceneConfig));
@@ -65,15 +67,24 @@ export default canvas => {
 
         sceneConstants.robot.position.x = robot.position.x;
         sceneConstants.robot.position.y = robot.position.y;
+        sceneConstants.robot.speed = robot.speed;
     
         for(let i=0; i<sceneConstants.sonars.length; i++) {
             sceneConstants.sonars[i].position.x = sonars[i].position.x;
             sceneConstants.sonars[i].position.y = sonars[i].position.y;
+
+            sceneConstants.sonars[i].senseAxis.x = sonars[i].senseAxis.x;
+            sceneConstants.sonars[i].senseAxis.y = sonars[i].senseAxis.y;
         }
 
         for(let i=0; i<sceneConstants.movingObstacles.length; i++) {
             sceneConstants.movingObstacles[i].position.x = movingObstacles[i].position.x;
             sceneConstants.movingObstacles[i].position.y = movingObstacles[i].position.y;
+
+            sceneConstants.movingObstacles[i].directionAxis.x = movingObstacles[i].directionAxis.x;
+            sceneConstants.movingObstacles[i].directionAxis.y = movingObstacles[i].directionAxis.y;
+            sceneConstants.movingObstacles[i].speed = movingObstacles[i].speed;
+            sceneConstants.movingObstacles[i].range = movingObstacles[i].range;
         }
 
         for(let i=0; i<sceneConstants.staticObstacles.length; i++) {

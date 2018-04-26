@@ -52,9 +52,13 @@ function Sonar(scene, config) {
     
         if(config.senseAxis.x) 
             sensedX = sense( { x: position.x, y: position.z }, { x: config.position.x, y: config.position.y }, padding, "x", config.name )
+        else
+            sensedX = false;
 
         if(config.senseAxis.y)
             sensedY = sense( { x: position.z, y: position.x }, { x: config.position.y, y: config.position.x }, padding, "y", config.name )
+        else
+            sensedY = false;
                     
         return { collision: false };
     }
