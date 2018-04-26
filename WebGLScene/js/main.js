@@ -10,7 +10,7 @@ const canvas = document.getElementById('canvas')
 const sceneManager = SceneManager(canvas)
 
 bindEventListeners()
-render()
+startRenderLoop()
 
 function bindEventListeners() {
 	window.onresize = resizeCanvas
@@ -37,14 +37,13 @@ function onKeyUp(event) {
 	sceneManager.onKeyUp(event.keyCode)
 }
 
-function render(time) {
-    requestAnimationFrame(render)
+function startRenderLoop(time) {
+    requestAnimationFrame(startRenderLoop)
 	sceneManager.update()
 	TWEEN.update(time)
 }
 
-initPlugHTML()
-function initPlugHTML() {
+(function initPlugHTML() {
 	const plugDiv = document.getElementById('plug')
 	const meaninglessIcons = [
 		document.getElementById('forklift-icon'),
@@ -56,4 +55,4 @@ function initPlugHTML() {
 		document.getElementById('carrot-icon'),
 	]
 	plugDiv.insertBefore(meaninglessIcons[getRandomInt(0, meaninglessIcons.length-1)], plugDiv.children[1])
-}
+})()
