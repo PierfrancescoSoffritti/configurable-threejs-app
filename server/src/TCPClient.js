@@ -58,4 +58,8 @@ function Communicator({ port, ip }) {
             self.send(data);
         }
     }
+
+    const msg = `{ "moveForward": 1000 }`;
+    this.send(msg);
+    console.log(JSON.parse(msg))
 }

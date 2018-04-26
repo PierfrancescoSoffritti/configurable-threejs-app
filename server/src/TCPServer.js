@@ -6,7 +6,7 @@ const connectedClients = {};
 function TCPServer() {
     this.start = function(port) {    
         const server = net.createServer( socket => {
-            const clientId = `${socket.remoteAddress}:${socket.remotePort}`;
+            const clientId = `${socket.remoteAddress}`;
 
             console.log(`\n[${ clientId }] connected`);
 
@@ -16,7 +16,7 @@ function TCPServer() {
                 String(message)
                     .split(SEPARATOR)
                     .filter(string => string.trim().length !== 0)
-                    .map(message => JSON.parse(message))
+                    .map(message => JSON.parse(JSON.parse(message)) )
                     .forEach( message => console.log(message) )
             });
 
