@@ -14,7 +14,6 @@ function WebpageServer(callbacks) {
     this.turnRight = duration => Object.keys(sockets).forEach( key => sockets[key].emit('turnRight', duration) )
     this.turnLeft = duration => Object.keys(sockets).forEach( key => sockets[key].emit('turnLeft', duration) )
     this.alarm = () => Object.keys(sockets).forEach( key => sockets[key].emit('alarm') )
-    this.stop = () => Object.keys(sockets).forEach( key => sockets[key].emit('stop') )
 }
 
 function startServer(callbacks) {

@@ -1,20 +1,16 @@
-import SceneManager from './SceneManager.js';
-import eventBus from './eventBus/EventBus.js';
-import eventBusEvents from './eventBus/events.js';
+import SceneManager from './SceneManager.js'
+import eventBus from './eventBus/EventBus.js'
+import eventBusEvents from './eventBus/events.js'
 
-initPlug();
-
-const canvas = document.getElementById("canvas");
-
-const sceneManager = SceneManager(canvas);
-
-const socket = io();
+const canvas = document.getElementById("canvas")
+const sceneManager = SceneManager(canvas)
+const socket = io()
     
 socket.on( 'moveForward', duration => moveForward(duration) )
+socket.on( 'moveBackwards', duration => moveBackwards(duration) )
 socket.on( 'turnRight', duration => turnRight(duration) )
 socket.on( 'turnLeft', duration => turnLeft(duration) )
-socket.on( 'alarm', duration => stopMoving() )
-socket.on( 'stop', duration => stopMoving() )
+socket.on( 'alarm', stopMoving )
 
 eventBus.subscribe( eventBusEvents.sonarActivated, sonarId => socket.emit("sonarActivated", sonarId))
 eventBus.subscribe( eventBusEvents.collision, objectName => { console.log(`collision with: ${objectName}`); socket.emit("collision", objectName); stopMoving(); })
@@ -26,52 +22,52 @@ const D = 68
 const R = 82
 const F = 70
 	
-let moveForwardTimeoutId;
-let moveBackwardsTimeoutId;
+let moveForwardTimeoutId
+let moveBackwardsTimeoutId
 
 function moveForward(duration) {
-	clearTimeout(moveForwardTimeoutId);
-	onKeyDown( { keyCode: W } );
-	if(duration >= 0) moveForwardTimeoutId = setTimeout( () => onKeyUp( { keyCode: W } ), duration );
+	clearTimeout(moveForwardTimeoutId)
+	onKeyDown( { keyCode: W } )
+	if(duration >= 0) moveForwardTimeoutId = setTimeout( () => onKeyUp( { keyCode: W } ), duration )
 }
 
 function moveBackwards(duration) {
-	clearTimeout(moveBackwardsTimeoutId);
-	onKeyDown( { keyCode: S } );
-	if(duration >= 0) moveBackwardsTimeoutId = setTimeout( () => onKeyUp( { keyCode: S } ), duration );
+	clearTimeout(moveBackwardsTimeoutId)
+	onKeyDown( { keyCode: S } )
+	if(duration >= 0) moveBackwardsTimeoutId = setTimeout( () => onKeyUp( { keyCode: S } ), duration )
 }
 
 function turnRight(duration) {
-	onKeyDown( { keyCode: R }, duration );
+	onKeyDown( { keyCode: R }, duration )
 }
 
 function turnLeft(duration) {
-	onKeyDown( { keyCode: F }, duration );
+	onKeyDown( { keyCode: F }, duration )
 }
 
 function stopMoving() {
-	onKeyUp( { keyCode: W } );
-	onKeyUp( { keyCode: S } );
+	onKeyUp( { keyCode: W } )
+	onKeyUp( { keyCode: S } )
 }
 
-bindEventListeners();
-render();
+bindEventListeners()
+render()
 
 function bindEventListeners() {
-	window.onresize = resizeCanvas;
+	window.onresize = resizeCanvas
 	window.onkeydown = onKeyDown
 	window.onkeyup = onKeyUp
-	resizeCanvas();	
+	resizeCanvas()
 }
 
 function resizeCanvas() {
-	canvas.style.width = '100%';
-	canvas.style.height= '100%';
+	canvas.style.width = '100%'
+	canvas.style.height= '100%'
 	
-	canvas.width  = canvas.offsetWidth;
-	canvas.height = canvas.offsetHeight;
+	canvas.width  = canvas.offsetWidth
+	canvas.height = canvas.offsetHeight
     
-    sceneManager.onWindowResize();
+    sceneManager.onWindowResize()
 }
 
 function onKeyDown(event, duration) {
@@ -83,13 +79,14 @@ function onKeyUp(event) {
 }
 
 function render(time) {
-    requestAnimationFrame(render);
-	sceneManager.update();
-	TWEEN.update(time);
+    requestAnimationFrame(render)
+	sceneManager.update()
+	TWEEN.update(time)
 }
 
-function initPlug() {
-	const plugDiv = document.getElementById("plug");
+initPlugHTML()
+function initPlugHTML() {
+	const plugDiv = document.getElementById("plug")
 	const icons = [
 		document.getElementById("forklift-icon"),
 		document.getElementById("lamp-icon"),
@@ -99,5 +96,5 @@ function initPlug() {
 		document.getElementById("shovel-icon"),
 		document.getElementById("carrot-icon"),
 	]
-	plugDiv.insertBefore(icons[getRandomInt(0, icons.length-1)], plugDiv.children[1]);
+	plugDiv.insertBefore(icons[getRandomInt(0, icons.length-1)], plugDiv.children[1])
 }

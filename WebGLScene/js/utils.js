@@ -1,33 +1,36 @@
 function getRandom(min, max) {
-    return Math.random() * (max - min) + min;
+    if(min >= max)
+        console.error("getRandom error: min >= max")
+
+    return Math.random() * (max - min) + min
 }
 
 function getRandomInt(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
+    return Math.round( getRandom(min, max) )
 }
 
 function clamp01(value) {
-  return Math.min(Math.max(value, 0), 1);
+  return Math.min(Math.max(value, 0), 1)
 }
 
 function toRad(deg) {
-    return deg * (Math.PI / 180);
+    return deg * (Math.PI / 180)
 }
 
 function toDeg(rad) {
-    return rad * (180 / Math.PI);
+    return rad * (180 / Math.PI)
 }
 
 function sin(val) {
-    return Math.sin(val);
+    return Math.sin(val)
 }
 
 function cos(val) {
-    return Math.cos(val);
+    return Math.cos(val)
 }
 
 function abs(val) {
-    return Math.abs(val);
+    return Math.abs(val)
 }
 
 function cartesianToPolar(x, y) {

@@ -38,6 +38,17 @@ a {
     animation: color-change 10000ms infinite;
 }
 
+a:hover {
+    text-decoration: none;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+
+    -webkit-animation: color-change 1000ms infinite;
+    -moz-animation: color-change 1000ms infinite;
+    -o-animation: color-change 1000ms infinite;
+    -ms-animation: color-change 1000ms infinite;
+    animation: color-change 1000ms infinite;
+}
+
 @-webkit-keyframes color-change {
     0% { color: #2196F3; }
     25% { color: #4CAF50; }
