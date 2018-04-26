@@ -96,14 +96,11 @@ function initPlug() {
 		document.getElementById("forklift"),
 		document.getElementById("lamp"),
 		document.getElementById("internet-explorer"),
-		document.getElementById("tower-fire"),
 		document.getElementById("towing"),
-		document.getElementById("tram"),
 		document.getElementById("tractor"),
 		document.getElementById("washing-machine"),
 		document.getElementById("fork"),
 		document.getElementById("shovel"),
-		document.getElementById("highway"),
 		document.getElementById("carrot"),
 	]
 	plugDiv.insertBefore(icons[getRandomInt(0, icons.length-1)], plugDiv.children[1]);

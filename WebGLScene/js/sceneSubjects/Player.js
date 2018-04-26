@@ -6,7 +6,6 @@ import eventBusEvents from '../eventBus/events.js';
 
 export default (scene, robotConfiguration) => {
 
-    //const playerPosition = { x: robotConfiguration.position.x, y: 30, z: robotConfiguration.position.y };
     const playerPosition = { x: robotConfiguration.position.x, y: 2, z: robotConfiguration.position.y };
 
     const group = new THREE.Group();
