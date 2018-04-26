@@ -7,6 +7,11 @@ function TCPServer(port, onMessage) {
     
     start(port);
 
+    this.send = function(object) {
+        for(key in connectedClients)
+            connectedClients[key].write( JSON.stringify(object) +SEPARATOR);
+    }
+
     function start(port) {    
         const server = net.createServer( socket => {
             const clientId = `${socket.remoteAddress}`;

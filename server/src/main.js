@@ -1,18 +1,24 @@
 const WebpageServer = require('./WebpageServer');
 const TCPServer = require('./TCPServer');
 
-const port = readArgument();
+const portNumber = readPortNumberFromArguments();
 
 function onWebpageReady() {
-    console.log("webpage ready");
+    const event = { event: 'webpage-ready' };
+    console.log( event );
+    tcpServer.send(event);
 }
 
 function onSonarActivated(msg) {
-    console.log(msg);
+    const event = { event: 'sonarActivated', ...msg };
+    console.log(event);
+    tcpServer.send(event);
 }
 
 function onCollision(objectName) {
-    console.log(objectName);
+    const event = { event: 'collision', objectName };
+    console.log(event);
+    tcpServer.send(event);
 }
 
 const webpageCallbacks = {
@@ -22,9 +28,9 @@ const webpageCallbacks = {
 }
 
 const webpageServer = new WebpageServer(webpageCallbacks);
-const tcpServer = new TCPServer( port, command => webpageServer[command.name](command.arg) );
+const tcpServer = new TCPServer( portNumber, command => webpageServer[command.name](command.arg) );
 
-function readArgument() {
+function readPortNumberFromArguments() {
     const port = Number(process.argv[2]);
     if(!port || port < 0 || port >= 65536) {
         console.error("This script expects a valid port number (>= 0 and < 65536) as argument.");
