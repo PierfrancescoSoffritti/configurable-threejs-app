@@ -1,8 +1,11 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
-import android.util.Log
-import com.github.salomonbrys.kotson.jsonObject
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.FlowableOnSubscribe
+import io.reactivex.Single
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.IOException
@@ -10,8 +13,6 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.net.SocketTimeoutException
-import com.google.gson.JsonParser
-import io.reactivex.*
 
 class TCPClient {
     private val separator = "__message__"
