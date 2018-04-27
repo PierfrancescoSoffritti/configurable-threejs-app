@@ -4,9 +4,9 @@ const TCPServer = require('./TCPServer')
 const portNumber = readPortNumberFromArguments()
 
 const webpageCallbacks = {
-    onWebpageReady: () => tcpServer.send( { event: 'webpage-ready' } ),
-    onSonarActivated: object => tcpServer.send( { event: 'sonarActivated', ...object } ),
-    onCollision: objectName => tcpServer.send( { event: 'collision', objectName } )
+    onWebpageReady: () => tcpServer.send( { name: 'webpage-ready' } ),
+    onSonarActivated: object => tcpServer.send( { name: 'sonarActivated', arg: object } ),
+    onCollision: objectName => tcpServer.send( { name: 'collision', arg: objectName } )
 }
 
 const webpageServer = new WebpageServer(webpageCallbacks)
