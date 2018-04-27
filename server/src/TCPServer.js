@@ -1,6 +1,6 @@
 const net = require('net')
 
-const SEPARATOR = '__endofmessage__'
+const SEPARATOR = '__message__'
 const connectedClients = {}
 
 function TCPServer(port, onMessage) {    
@@ -21,7 +21,8 @@ function TCPServer(port, onMessage) {
             socket.on('data', message => {
                 String(message)
                      .split(SEPARATOR)
-                     .filter( string => ( string.trim().length !== 0 && string[0] === "{" ) )
+                     .filter( string => string.trim().length !== 0  )
+                     .filter( string => string[0] === "{" )
                      .map( JSON.parse )
                      .forEach( onMessage )
             })

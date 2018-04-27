@@ -11,10 +11,9 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 import com.google.gson.JsonParser
 import io.reactivex.*
-import java.io.PrintWriter
 
 class TCPClient {
-    private val separator = "__endofmessage__"
+    private val separator = "__message__"
 
     private var socket: Socket? = null
     private lateinit var inSocket: DataInputStream

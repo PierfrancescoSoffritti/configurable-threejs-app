@@ -1,6 +1,6 @@
 const net = require('net');
 
-const SEPARATOR = "__endofmessage__";
+const SEPARATOR = "__message__";
 
 new Communicator({port: readPortNumberFromArguments(), ip: "localhost"})
 
