@@ -9,10 +9,11 @@ If you have cloned this repo you need to install all the required node modules, 
 ```
 cd server
 npm install
+```
 
+```
 cd WebGLScene
 npm install
-
 ```
 
 Execute this command to start the server, from the root folder of the project
@@ -47,3 +48,6 @@ Sonars, simple sensors that can detect when the player is on their trajectory
 ### Scene configuration
 
 In order to adapt the scene for different use cases, users don't need any knowledge of Javascript or Three.js, instead they can edit a simple configuration file that is used to set up the scene.
+
+## Receive input from outside
+### IO interface
