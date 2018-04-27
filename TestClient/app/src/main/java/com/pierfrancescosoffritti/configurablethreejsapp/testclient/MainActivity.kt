@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity() {
         client = TCPClient()
 
         connect_button.setOnClickListener { connect() }
-        forward_button.setOnClickListener { client.write(jsonObject(name to "moveForward", arg to "1000")).subscribeOn(Schedulers.io()).subscribe() }
-        backward_button.setOnClickListener { client.write(jsonObject(name to "moveBackward", arg to "1000")).subscribeOn(Schedulers.io()).subscribe() }
-        left_button.setOnClickListener { client.write(jsonObject(name to "turnRight", arg to "1000")).subscribeOn(Schedulers.io()).subscribe() }
-        right_button.setOnClickListener { client.write(jsonObject(name to "turnLeft", arg to "1000")).subscribeOn(Schedulers.io()).subscribe() }
+        forward_button.setOnClickListener { client.write(jsonObject(name to "moveForward", arg to "300")).subscribeOn(Schedulers.io()).subscribe() }
+        backward_button.setOnClickListener { client.write(jsonObject(name to "moveBackward", arg to "300")).subscribeOn(Schedulers.io()).subscribe() }
+        left_button.setOnClickListener { client.write(jsonObject(name to "turnLeft", arg to "300")).subscribeOn(Schedulers.io()).subscribe() }
+        right_button.setOnClickListener { client.write(jsonObject(name to "turnRight", arg to "300")).subscribeOn(Schedulers.io()).subscribe() }
         alarm_button.setOnClickListener { client.write(jsonObject(name to "alarm")).subscribeOn(Schedulers.io()).subscribe() }
     }
 

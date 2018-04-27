@@ -2,7 +2,7 @@ const net = require('net');
 
 const SEPARATOR = "__endofmessage__";
 
-new Communicator({port: 8900, ip: "localhost"})
+new Communicator({port: readPortNumberFromArguments(), ip: "localhost"})
 
 function Communicator({ port, ip }) {
     const self = this;
@@ -27,8 +27,8 @@ function Communicator({ port, ip }) {
             String(message)
                 .split(SEPARATOR)
                 .filter(string => string.trim().length !== 0)
-                .map( message => JSON.parse(message) )
-                .forEach( message => console.log(message) );
+                .map( JSON.parse )
+                .forEach( console.log );
         });
         
         client.on('close', () =>  console.log(`\tConnection closed`) );
@@ -38,7 +38,7 @@ function Communicator({ port, ip }) {
 
     this.send = function(message) {
         if(!clientSocket.connecting)
-            clientSocket.write( message +SEPARATOR);
+            clientSocket.write(SEPARATOR +message +SEPARATOR);
         else {
             console.log(`\tSocket not created, message added to queue`);
             outQueue.push(message);
@@ -60,5 +60,15 @@ function Communicator({ port, ip }) {
     }
 
     const msg = `{ "name": "moveForward", "arg": 1000 }`;
-    this.send(msg);
+    this.send( msg );
+}
+
+function readPortNumberFromArguments() {
+    const port = Number(process.argv[2])
+    if(!port || port < 0 || port >= 65536) {
+        console.error("This script expects a valid port number (>= 0 and < 65536) as argument.")
+        process.exit()
+    }
+
+    return port
 }

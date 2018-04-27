@@ -11,6 +11,7 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 import com.google.gson.JsonParser
 import io.reactivex.*
+import java.io.PrintWriter
 
 class TCPClient {
     private val separator = "__endofmessage__"
@@ -41,7 +42,7 @@ class TCPClient {
         Log.d(javaClass.simpleName, message.toString())
         return Single.create<TCPClient> {
             try {
-                outSocket.writeChars(message.toString() +separator)
+                outSocket.writeUTF(separator +message.toString() +separator)
                 it.onSuccess( this )
             } catch (e: SocketTimeoutException) {
                 it.onError(e)
