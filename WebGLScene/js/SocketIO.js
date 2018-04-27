@@ -5,7 +5,7 @@ export default (onKeyUp, onKeyDown) => {
     const socket = io()
         
     socket.on( 'moveForward', duration => moveForward(duration) )
-    socket.on( 'moveBackwards', duration => moveBackwards(duration) )
+    socket.on( 'moveBackward', duration => moveBackward(duration) )
     socket.on( 'turnRight', duration => turnRight(duration) )
     socket.on( 'turnLeft', duration => turnLeft(duration) )
     socket.on( 'alarm', stopMoving )
@@ -23,7 +23,7 @@ export default (onKeyUp, onKeyDown) => {
     }
         
     let moveForwardTimeoutId
-    let moveBackwardsTimeoutId
+    let moveBackwardTimeoutId
 
     function moveForward(duration) {
         clearTimeout(moveForwardTimeoutId)
@@ -31,10 +31,10 @@ export default (onKeyUp, onKeyDown) => {
         if(duration >= 0) moveForwardTimeoutId = setTimeout( () => onKeyUp( { keyCode: keycodes.W } ), duration )
     }
 
-    function moveBackwards(duration) {
-        clearTimeout(moveBackwardsTimeoutId)
+    function moveBackward(duration) {
+        clearTimeout(moveBackwardTimeoutId)
         onKeyDown( { keyCode: keycodes.S } )
-        if(duration >= 0) moveBackwardsTimeoutId = setTimeout( () => onKeyUp( { keyCode: keycodes.S } ), duration )
+        if(duration >= 0) moveBackwardTimeoutId = setTimeout( () => onKeyUp( { keyCode: keycodes.S } ), duration )
     }
 
     function turnRight(duration) {

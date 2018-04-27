@@ -18,12 +18,18 @@ function TCPServer(port, onMessage) {
 
             console.log(`\n[${ clientId }] connected`)
 
-            socket.on('data', message => {      
-                String(message)
-                    .split(SEPARATOR)
-                    .filter( string => string.trim().length !== 0 )
-                    .map( JSON.parse )
-                    .forEach( onMessage )
+            socket.on('data', message => {
+                
+                message = message.toString('utf-8')
+                message = message.replace(/ /g,'')
+
+                console.log(message)
+
+                // String(message)
+                //     .split(SEPARATOR)
+                //     .filter( string => string.trim().length !== 0 )
+                //     .map( JSON.parse )
+                //     .forEach( onMessage )
             })
 
             socket.on('end', () => {

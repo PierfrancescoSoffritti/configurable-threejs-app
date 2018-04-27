@@ -12,7 +12,7 @@ export default (mesh, camera, config, collisionManager) => {
     }
 	
     let forward = false
-    let backwards = false
+    let backward = false
     let rotating = false
 
     setCameraPositionRelativeToMesh(camera, mesh)
@@ -21,7 +21,7 @@ export default (mesh, camera, config, collisionManager) => {
         if(keyCode === keycodes.W)
             forward = true
         else if(keyCode === keycodes.S)
-            backwards = true
+            backward = true
         
         else if(keyCode === keycodes.R)
             rotate(-Math.PI/2, duration)
@@ -33,7 +33,7 @@ export default (mesh, camera, config, collisionManager) => {
         if(keyCode === keycodes.W)
             forward = false
         else if(keyCode === keycodes.S)
-            backwards = false;
+            backward = false;
     }
 
     function rotate(angle, duration = 300) {
@@ -58,8 +58,8 @@ export default (mesh, camera, config, collisionManager) => {
         const directionVector = new THREE.Vector3( 0, 0, 1 )
         directionVector.applyMatrix4(matrix)
     
-		if(forward || backwards) {
-            const direction = backwards ? 1 : -1
+		if(forward || backward) {
+            const direction = backward ? 1 : -1
             const stepVector = directionVector.multiplyScalar( config.speed * direction )
             const tPosition = mesh.position.clone().add(stepVector)
             

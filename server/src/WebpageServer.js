@@ -10,7 +10,7 @@ function WebpageServer(callbacks) {
     startServer(callbacks)
 
     this.moveForward = duration => Object.keys(sockets).forEach( key => sockets[key].emit('moveForward', duration) )
-    this.moveBackwards = duration => Object.keys(sockets).forEach( key => sockets[key].emit('moveBackwards', duration) )
+    this.moveBackward = duration => Object.keys(sockets).forEach( key => sockets[key].emit('moveBackward', duration) )
     this.turnRight = duration => Object.keys(sockets).forEach( key => sockets[key].emit('turnRight', duration) )
     this.turnLeft = duration => Object.keys(sockets).forEach( key => sockets[key].emit('turnLeft', duration) )
     this.alarm = () => Object.keys(sockets).forEach( key => sockets[key].emit('alarm') )
