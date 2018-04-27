@@ -1,6 +1,7 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
 import android.util.Log
+import com.github.salomonbrys.kotson.jsonObject
 import com.google.gson.JsonObject
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -38,7 +39,6 @@ class TCPClient {
     }
 
     fun write(message: JsonObject): Single<TCPClient> {
-        Log.d(javaClass.simpleName, message.toString())
         return Single.create<TCPClient> {
             try {
                 outSocket.writeUTF(separator +message.toString() +separator)
@@ -55,10 +55,27 @@ class TCPClient {
 
                 while (true) {
                     val message = inSocket.readUTF()
-                    message.replace(separator, "")
-                    val jsonObject = JsonParser().parse("{\"a\": \"A\"}").asJsonObject
+                    message
+                            .split(";")
+                            .forEach{ subscriber.onNext(JsonParser().parse(it).asJsonObject) }
 
-                    subscriber.onNext(jsonObject)
+//                    subscriber.onNext(jsonObject("name" to "moveForward", "arg" to "300"))
+
+//                    message
+//                            .split(separator)
+//                            .map{ it.trim() }
+//                            .filter{ it.isNotEmpty() }
+//                            .filter{ it[0] == '{' }
+//                            .map{ JsonParser().parse(it).asJsonObject }
+//                            .forEach{ subscriber.onNext(it) }
+
+//                    message
+//                            .split(separator)
+//                            .map{ it.trim() }
+//                            .filter{ it.isNotEmpty() }
+//                            .filter{ it[0] == '{' }
+//                            .map{ JsonParser().parse(it).asJsonObject }
+//                            .forEach{ Log.d(javaClass.simpleName, it); subscriber.onNext(JsonParser().parse(it).asJsonObject) }
                 }
 
             } catch (e: Exception) {

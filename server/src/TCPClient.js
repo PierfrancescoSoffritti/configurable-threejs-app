@@ -25,10 +25,12 @@ function Communicator({ port, ip }) {
 
         client.on('data', message => {
             String(message)
-                .split(SEPARATOR)
-                .filter(string => string.trim().length !== 0)
-                .map( JSON.parse )
-                .forEach( console.log );
+                    .split(SEPARATOR)
+                    .map( string => string.trim() )
+                    .filter( string => string.length !== 0  )
+                    .filter( string => string[0] === "{" )
+                    .map( JSON.parse )
+                    .forEach( console.log );
         });
         
         client.on('close', () =>  console.log(`\tConnection closed`) );

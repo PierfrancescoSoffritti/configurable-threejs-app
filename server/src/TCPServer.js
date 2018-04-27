@@ -8,7 +8,7 @@ function TCPServer(port, onMessage) {
 
     this.send = function(object) {
         for(key in connectedClients)
-            connectedClients[key].write( `${ JSON.stringify(object) } ${ SEPARATOR }` )
+            connectedClients[key].write(JSON.stringify(object) +";")
     }
 
     function start(port) {    
@@ -21,7 +21,8 @@ function TCPServer(port, onMessage) {
             socket.on('data', message => {
                 String(message)
                      .split(SEPARATOR)
-                     .filter( string => string.trim().length !== 0  )
+                     .map( string => string.trim() )
+                     .filter( string => string.length !== 0  )
                      .filter( string => string[0] === "{" )
                      .map( JSON.parse )
                      .forEach( onMessage )
