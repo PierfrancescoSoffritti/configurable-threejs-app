@@ -1,12 +1,12 @@
 # ConfigurableThreejsApp
 
-This project is a 3D web-based application built with Three.js. The webpage is served by an internal server.
+This project is a configurable 3D web-based application built with Three.js. The webpage is served from an internal Node.js server.
 
 ## How to start
 
 ### Install
 
-To use this project you need to download all the required node modules from npm, to do that run this commands from the root folder of the project
+To use this project you need to download all the required modules from npm, to do that run this commands from the root folder of the project
 
 ```
 cd server
@@ -42,21 +42,21 @@ As mentioned before the scene is built with Three.js (WebGL) and runs into your 
 
 ### Scene components
 
-* **Player object**: an object controlled by the user that can move in the scene. It can be controlled via keyboard (**w**: move forward, **s**: move backward, **r**: turn right, **f**: turn left) or with a remote client (more on that later).
+* **Player object**: an object controlled by the user that can be moved in the scene. It can be controlled via keyboard (**w**: move forward, **s**: move backward, **r**: turn right, **f**: turn left) or with a remote client (more on that later).
 
-* **Platform (or floor)**: area on which the player can move and objects can be placed.
+* **Platform (or floor)**: area on which the player can move and objects can be located.
 
 * **Static obstacle**: non-moving obstacle the player can't go through.
 
 * **Moving obstacle**: obstacle moving with a periodic movement that the player can't travers.
 
-* **Sonar**: simple sensor that can detect when the player is on its trajectory.
+* **Sonar**: sensor that can detect when the player is on its trajectory.
 
 ### Scene configuration
 
 In order to adapt the scene for different use cases, users don't need any knowledge of Javascript or Three.js, instead they can edit a simple configuration file that is used to set up the scene.
 
-The configuration file can be found here `.\WebGLScene\sceneConfig.js`. It is a node module, but that's not important, it contains a Javascript object saved into a variable. This Javascript object contains all the information needed to create the scene.
+The configuration file can be found here [`.\WebGLScene\sceneConfig.js`](https://github.com/PierfrancescoSoffritti/ConfigurableThreejsApp/blob/master/WebGLScene/sceneConfig.js). It is a node module, it contains a Javascript object saved into a variable. This Javascript object contains all the information needed to create the scene.
 
 In particulare: it contains one object for every scene componenet.
 

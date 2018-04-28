@@ -26,13 +26,13 @@ const config = {
             speed: 1,
             range: 4
         },
-        // {
-        //     name: "moving-obstacle-2",
-        //     position: { x: .5, y: .2 },
-        //     directionAxis: { x: true, y: true },
-        //     speed: 2,
-        //     range: 2
-        // }
+        {
+            name: "moving-obstacle-2",
+            position: { x: .5, y: .2 },
+            directionAxis: { x: true, y: true },
+            speed: 2,
+            range: 2
+        }
     ],
     staticObstacles: [
         {
