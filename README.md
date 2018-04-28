@@ -71,7 +71,7 @@ floor: {
 }
 ```
 
-This floor is a square of size 40 in the x axes and 40 in the y axes.
+This floor is a square of size 40 in the x axis and 40 in the y axis.
 
 #### Player
 The player object has two properties: position and speed.
@@ -132,7 +132,7 @@ Each static obstacle has three properties: name, centerPosition and size.
 
 - The name is a string.
 - The centerPosition can only be expressed with values between 0 and 1 and is relative to the floor. (0,0) is the top left corner of the floor, (1, 1) is the bottom right corner.
-- The size can only be expressed with values between 0 and 1 and is relative to the floor. x = 1 means that the static obstacle will have the same x dimension of the floor. If the object has x = 0.4, it's center will be at x = 0.2, relative to the object.
+- The size can only be expressed with values between 0 and 1 and is relative to the floor. If x = 1 the static obstacle will have the same x dimension of the floor. 
 
 ```
 staticObstacles: [
@@ -212,21 +212,21 @@ Messages from the server to the client have this format: `;{ "type": "event-type
 #### Server input
 Messages from the client to the server.
 
-- moveForward - `{ "type": "moveForward", "arg": 300 }`: This messages is used to move the player in its current forward direction. `arg` is the duration in seconds of the movement. The duration can be negative, in that case the player will move until in encouters an obstacle.
+- moveForward - `{ "type": "moveForward", "arg": 300 }`: This message is used to move the player in its current forward direction. `arg` is the duration in seconds of the movement. The duration can be negative, in that case the player will move until in encouters an obstacle.
 
-- moveBackward - `{ "type": "moveBackward", "arg": 300 }`: This messages is used to move the player in its current backward direction. `arg` is the duration in seconds of the movement. The duration can be negative, in that case the player will move until in encouters an obstacle.
+- moveBackward - `{ "type": "moveBackward", "arg": 300 }`: This message is used to move the player in its current backward direction. `arg` is the duration in seconds of the movement. The duration can be negative, in that case the player will move until in encouters an obstacle.
 
-- turnRight - `{ "type": "turnRight", "arg": 300 }`: This messages is used to rotate the player. The player will always make a 90° rotation. `arg` is the amount of time a 90° rotation will require.
+- turnRight - `{ "type": "turnRight", "arg": 300 }`: This message is used to rotate the player. The player will always make a 90° rotation. `arg` is the amount of time the 90° rotation will require.
 
-- turnLeft - `{ "type": "turnLeft", "arg": 300 }`: This messages is used to rotate the player. The player will always make a 90° rotation. `arg` is the amount of time a 90° rotation will require.
+- turnLeft - `{ "type": "turnLeft", "arg": 300 }`: This message is used to rotate the player. The player will always make a 90° rotation. `arg` is the amount of time the 90° rotation will require.
 
-- turnLeft - `{ "type": "alarm" }`: This message will stop the player's movement. Rotations aren't stoppable.
+- alarm - `{ "type": "alarm" }`: This message will stop the player's movement. Rotations aren't stoppable.
 
 ## Client examples
-Two examples of client are provided in this repo, in the `ClientExamples` folder.
+Two examples of client are provided in this repo, in the [ClientExamples](https://github.com/PierfrancescoSoffritti/ConfigurableThreejsApp/tree/master/ClientExamples) folder.
 
-- Android client, it can be used as a reference to write Java/Kotlin/.. clients. The app is written in Kotlin, translating the IO module to other langues should be trivial. The apk of the app can be downloaded [here](https://github.com/PierfrancescoSoffritti/ConfigurableThreejsApp/raw/master/ClientExamples/AndroidClient/app.apk).
+- Android client, it can be used as a reference to write Java/Kotlin/.. clients. The app is written in Kotlin, translating the [IO module](https://github.com/PierfrancescoSoffritti/ConfigurableThreejsApp/tree/master/ClientExamples/AndroidClient/app/src/main/java/com/pierfrancescosoffritti/configurablethreejsapp/testclient/io) to other object oriented langues should be trivial. The apk of the app can be downloaded [here](https://github.com/PierfrancescoSoffritti/ConfigurableThreejsApp/raw/master/ClientExamples/AndroidClient/app.apk).
 
 <img src="https://raw.githubusercontent.com/PierfrancescoSoffritti/ConfigurableThreejsApp/master/pictures/androidapp.png" height="500">
 
-- Node.js client, it can be used as a reference to write other Node.js clients. To be launch this client requires two arguments: ip and port of the server.
+- Node.js client, it can be used as a reference to write other Node.js clients. This client requires two arguments: ip and port of the server.
