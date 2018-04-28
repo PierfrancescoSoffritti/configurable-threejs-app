@@ -3,7 +3,7 @@ const net = require('net')
 const SEPARATOR = ';'
 const connectedClients = {}
 
-function TCPServer(port, onMessage) {    
+function TCPServer( { port, onClientConnected, onMessage } ) {    
     start(port)
 
     this.send = function(object) {
@@ -17,6 +17,8 @@ function TCPServer(port, onMessage) {
             connectedClients[clientId] = socket
 
             console.log(`\n[${ clientId }] connected`)
+            
+            onClientConnected()
 
             socket.on('data', message => {
                 String(message)

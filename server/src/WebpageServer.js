@@ -6,6 +6,8 @@ const socketIO = require('socket.io')(http)
 const sockets = {}
 let socketCount = -1
 
+let webpageReady = false
+
 function WebpageServer(callbacks) {
     startServer(callbacks)
 
@@ -35,11 +37,17 @@ function initSocketIOServer(callbacks) {
         sockets[key] = socket
         
         callbacks.onWebpageReady()
+        webpageReady = true
+        console.log("webpage ready")
 
         socket.on( 'sonarActivated', callbacks.onSonarActivated )
         socket.on( 'collision', callbacks.onCollision )
-        socket.on( 'disconnect', () => delete sockets[key] )
+        socket.on( 'disconnect', () => { delete sockets[key]; webpageReady = false; console.log("webpage disconnected") } )
     })
 }
 
-module.exports = WebpageServer
+function isWebpageRead() {
+    return webpageReady;
+}
+
+module.exports = { WebpageServer, isWebpageRead }
