@@ -36,7 +36,8 @@ The webpage will be available at `http://localhost:8080/`
 
 ## The scene
 
-_scene_description.jpg_
+![scene description](https://raw.githubusercontent.com/PierfrancescoSoffritti/ConfigurableThreejsApp/master/pictures/scene_description.jpg)
+
 As mentioned before the scene is built with Three.js (WebGL) and runs into your browser.
 
 ### Scene components
