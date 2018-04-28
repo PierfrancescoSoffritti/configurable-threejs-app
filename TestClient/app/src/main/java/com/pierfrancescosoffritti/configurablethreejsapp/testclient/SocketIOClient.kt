@@ -1,10 +1,15 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
 import android.os.Handler
+import io.reactivex.Flowable
 import io.socket.client.IO
 import io.socket.client.Socket
 
 class SocketIOClient(private val mainThreadHandler: Handler, private val connectionListener: ConnectionListener) : OutputChannel {
+    override fun getOutput(): Flowable<String> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private var socket: Socket? = null
 
     override fun connect(ip: String, port: Int) {

@@ -7,9 +7,7 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableOnSubscribe
 import io.reactivex.Single
-import java.io.DataInputStream
-import java.io.DataOutputStream
-import java.io.IOException
+import java.io.*
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
@@ -19,8 +17,8 @@ class TCPClient {
     private val separator = ";"
 
     private var socket: Socket? = null
-    private lateinit var inSocket: DataInputStream
-    private lateinit var outSocket: DataOutputStream
+    private lateinit var inSocket: BufferedReader
+    private lateinit var outSocket: PrintWriter
 
     fun connect(ip: String, port: Int): Single<TCPClient> {
         socket?.close()
@@ -31,8 +29,8 @@ class TCPClient {
 
             try {
                 socket?.connect(socketAddress, 5000)
-                inSocket = DataInputStream(socket?.getInputStream())
-                outSocket = DataOutputStream(socket?.getOutputStream())
+                inSocket = BufferedReader(InputStreamReader(socket?.getInputStream()))
+                outSocket = PrintWriter(socket?.getOutputStream(), true)
 
                 it.onSuccess( this )
 
@@ -45,24 +43,21 @@ class TCPClient {
     fun write(name: String, arg: Int) {
         val string = "$separator{ \"name\":\"$name\", \"arg\":$arg }$separator"
         try {
-            outSocket.writeUTF(string)
+            outSocket.println(string)
         } catch (e: Exception) {
             Log.e(javaClass.simpleName, "Error writing: $string")
             throw e
         }
     }
 
-    fun getOutput() : Flowable<JsonObject> {
-        val onSubscribe: FlowableOnSubscribe<JsonObject> = FlowableOnSubscribe { subscriber ->
+    fun getOutput() : Flowable<String> {
+        val onSubscribe: FlowableOnSubscribe<String> = FlowableOnSubscribe { subscriber ->
             try {
-
                 while (true) {
-                    val message = inSocket.readUTF()
+                    val message = inSocket.readLine()
                     message.split(separator)
                         .map{ it.trim() }
                         .filter{ it.isNotEmpty() }
-                        .filter{ it[0] == '{' }
-                        .map{ JsonParser().parse(it).asJsonObject }
                         .forEach{ subscriber.onNext(it) }
                 }
 
@@ -91,9 +86,5 @@ class TCPClient {
                 it.onError(e)
             }
         }
-    }
-
-    fun isConnected(): Boolean {
-        return socket?.isConnected ?: false
     }
 }

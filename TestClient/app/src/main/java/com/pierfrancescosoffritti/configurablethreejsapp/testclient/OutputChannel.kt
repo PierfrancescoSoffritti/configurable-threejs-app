@@ -1,5 +1,8 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
+import com.google.gson.JsonObject
+import io.reactivex.Flowable
+
 interface OutputChannel {
     object OutputConstants {
         const val alarm = "alarm"
@@ -19,4 +22,5 @@ interface OutputChannel {
     fun backward(duration: Int)
     fun right(duration: Int)
     fun left(duration: Int)
+    fun getOutput(): Flowable<String>
 }

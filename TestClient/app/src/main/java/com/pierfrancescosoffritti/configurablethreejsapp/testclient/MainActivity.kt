@@ -3,11 +3,14 @@ package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), ConnectionListener {
 
     private lateinit var handler: Handler
+    private lateinit var outputChannel: OutputChannel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +19,7 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
         handler = Handler(mainLooper)
         lifecycle.addObserver(PreferencesManager(this, ip_address_edit_text, port_edit_text))
 
-        val outputChannel = TCPEndPoint(TCPClient(), this)
+        outputChannel = TCPEndPoint(TCPClient(), this)
 
         connect_button.setOnClickListener { outputChannel.connect(ip_address_edit_text.text.toString(), Integer.parseInt(port_edit_text.text.toString())) }
 
@@ -29,6 +32,10 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
 
     override fun onConnected() {
         connection_status_lable.text = "CONNECTED"
+        outputChannel.getOutput()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ server_output_text_view.text = it }, { throw it }, {})
     }
 
     override fun onDisconnected() {

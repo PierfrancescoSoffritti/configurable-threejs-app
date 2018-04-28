@@ -1,6 +1,8 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
 import android.os.Handler
+import com.google.gson.JsonObject
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -39,5 +41,9 @@ class TCPEndPoint(private val tcpClient: TCPClient, private val connectionListen
 
     override fun left(duration: Int) {
         Thread { tcpClient.write(OutputChannel.OutputConstants.turnLeft, duration) }.start()
+    }
+
+    override fun getOutput(): Flowable<String> {
+        return tcpClient.getOutput()
     }
 }
