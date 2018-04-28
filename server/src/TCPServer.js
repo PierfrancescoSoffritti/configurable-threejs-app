@@ -1,6 +1,6 @@
 const net = require('net')
 
-const SEPARATOR = '__message__'
+const SEPARATOR = ';'
 const connectedClients = {}
 
 function TCPServer(port, onMessage) {    
@@ -8,7 +8,7 @@ function TCPServer(port, onMessage) {
 
     this.send = function(object) {
         for(key in connectedClients)
-            connectedClients[key].write(JSON.stringify(object) +";")
+            connectedClients[key].write(JSON.stringify(object) +SEPARATOR)
     }
 
     function start(port) {    

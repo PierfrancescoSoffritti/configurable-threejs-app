@@ -1,5 +1,6 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
+import android.util.Log
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import io.reactivex.BackpressureStrategy
@@ -15,13 +16,15 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 
 class TCPClient {
-    private val separator = "__message__"
+    private val separator = ";"
 
     private var socket: Socket? = null
     private lateinit var inSocket: DataInputStream
     private lateinit var outSocket: DataOutputStream
 
     fun connect(ip: String, port: Int): Single<TCPClient> {
+        socket?.close()
+
         return Single.create<TCPClient> {
             val socketAddress = InetSocketAddress(InetAddress.getByName(ip), port)
             socket = Socket()
@@ -39,14 +42,13 @@ class TCPClient {
         }
     }
 
-    fun write(message: JsonObject): Single<TCPClient> {
-        return Single.create<TCPClient> {
-            try {
-                outSocket.writeUTF(separator +message.toString() +separator)
-                it.onSuccess( this )
-            } catch (e: SocketTimeoutException) {
-                it.onError(e)
-            }
+    fun write(name: String, arg: Int) {
+        val string = "$separator{ \"name\":\"$name\", \"arg\":$arg }$separator"
+        try {
+            outSocket.writeUTF(string)
+        } catch (e: Exception) {
+            Log.e(javaClass.simpleName, "Error writing: $string")
+            throw e
         }
     }
 
@@ -56,27 +58,12 @@ class TCPClient {
 
                 while (true) {
                     val message = inSocket.readUTF()
-                    message
-                            .split(";")
-                            .forEach{ subscriber.onNext(JsonParser().parse(it).asJsonObject) }
-
-//                    subscriber.onNext(jsonObject("name" to "moveForward", "arg" to "300"))
-
-//                    message
-//                            .split(separator)
-//                            .map{ it.trim() }
-//                            .filter{ it.isNotEmpty() }
-//                            .filter{ it[0] == '{' }
-//                            .map{ JsonParser().parse(it).asJsonObject }
-//                            .forEach{ subscriber.onNext(it) }
-
-//                    message
-//                            .split(separator)
-//                            .map{ it.trim() }
-//                            .filter{ it.isNotEmpty() }
-//                            .filter{ it[0] == '{' }
-//                            .map{ JsonParser().parse(it).asJsonObject }
-//                            .forEach{ Log.d(javaClass.simpleName, it); subscriber.onNext(JsonParser().parse(it).asJsonObject) }
+                    message.split(separator)
+                        .map{ it.trim() }
+                        .filter{ it.isNotEmpty() }
+                        .filter{ it[0] == '{' }
+                        .map{ JsonParser().parse(it).asJsonObject }
+                        .forEach{ subscriber.onNext(it) }
                 }
 
             } catch (e: Exception) {
@@ -89,17 +76,20 @@ class TCPClient {
         return Flowable.create(onSubscribe, BackpressureStrategy.BUFFER);
     }
 
-    fun disconnect() {
-        try {
-            outSocket.flush()
-            outSocket.close()
+    fun disconnect(): Single<TCPClient> {
+        return Single.create<TCPClient> {
+            try {
+                outSocket.flush()
+                outSocket.close()
 
-            inSocket.close()
+                inSocket.close()
 
-            socket?.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            throw RuntimeException(e)
+                socket?.close()
+
+                it.onSuccess(this)
+            } catch (e: IOException) {
+                it.onError(e)
+            }
         }
     }
 

@@ -1,9 +1,10 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
+import android.os.Handler
 import io.socket.client.IO
 import io.socket.client.Socket
 
-class SocketIOClient(private val connectionListener: ConnectionListener) : OutputChannel {
+class SocketIOClient(private val mainThreadHandler: Handler, private val connectionListener: ConnectionListener) : OutputChannel {
     private var socket: Socket? = null
 
     override fun connect(ip: String, port: Int) {
@@ -20,8 +21,8 @@ class SocketIOClient(private val connectionListener: ConnectionListener) : Outpu
 
         socket = IO.socket("http://$ip:$port", opts)
         socket
-            ?.on(Socket.EVENT_CONNECT, { connectionListener.postOnMainThread { connectionListener.onConnected() } })
-            ?.on(Socket.EVENT_DISCONNECT, { connectionListener.postOnMainThread { connectionListener.onDisconnected() } })
+            ?.on(Socket.EVENT_CONNECT, { mainThreadHandler.post { connectionListener.onConnected() } })
+            ?.on(Socket.EVENT_DISCONNECT, { mainThreadHandler.post { connectionListener.onDisconnected() } })
     }
 
     override fun disconnect() {
