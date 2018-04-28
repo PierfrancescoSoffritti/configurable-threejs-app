@@ -1,16 +1,18 @@
 const WebpageServer = require('./WebpageServer')
 const TCPServer = require('./TCPServer')
+const SocketIOServer = require('./SocketIOServer')
 
 const portNumber = readPortNumberFromArguments()
 
 const webpageCallbacks = {
-    onWebpageReady: () => tcpServer.send( { name: 'webpage-ready' } ),
-    onSonarActivated: object => tcpServer.send( { name: 'sonarActivated', arg: object } ),
-    onCollision: objectName => tcpServer.send( { name: 'collision', arg: objectName } )
+    onWebpageReady: () => server.send( { name: 'webpage-ready' } ),
+    onSonarActivated: object => server.send( { name: 'sonarActivated', arg: object } ),
+    onCollision: objectName => server.send( { name: 'collision', arg: objectName } )
 }
 
 const webpageServer = new WebpageServer(webpageCallbacks)
-const tcpServer = new TCPServer( portNumber, command => webpageServer[command.name](command.arg) )
+// const server = new TCPServer( portNumber, command => webpageServer[command.name](command.arg) )
+const server = new SocketIOServer( portNumber, command => console.log(command) )
 
 function readPortNumberFromArguments() {
     const port = Number(process.argv[2])

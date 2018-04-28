@@ -12,14 +12,14 @@ class PreferencesManager(private val context: Context, private val ipEditText: E
     private val sharedPreferencesKey = "MainActivity_SharedPreferences"
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
+    fun restoreValues() {
         val prefs = context.getSharedPreferences(sharedPreferencesKey, Context.MODE_PRIVATE)
         ipEditText.setText(prefs.getString(preferenceKeyIp, ""))
         portEditText.setText(prefs.getString(preferenceKeyPort, ""))
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop() {
+    fun saveValues() {
         val prefs = context.getSharedPreferences(sharedPreferencesKey, Context.MODE_PRIVATE)
         prefs.edit()
                 .putString(preferenceKeyIp, ipEditText.text.toString())

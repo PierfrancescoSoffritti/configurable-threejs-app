@@ -5,7 +5,7 @@ const io = require('socket.io')(http)
 const sockets = {}
 let socketCount = -1
 
-function TCPServer(port, onMessage) {
+function SocketIOServer(port, onMessage) {
     start(port)
 
     this.send = function(object) {
@@ -15,15 +15,11 @@ function TCPServer(port, onMessage) {
     
     function start(port) {
         io.on('connection', socket => {
-            // socketCount++
-            // const key = socketCount
-            // sockets[key] = socket
-            
-            const clientId = `${socket.remoteAddress}`
-            console.log(clientId)
-            connectedClients[clientId] = socket
+            socketCount++
+            const socketId = socketCount
+            sockets[socketId] = socket
 
-            console.log(`\n[${ clientId }] connected`)
+            console.log(`\n[${ socketId }] connected`)
 
             socket.on( 'alarm', msg => onMessage( { name: 'alarm' } ) )
 
@@ -31,13 +27,13 @@ function TCPServer(port, onMessage) {
             socket.on( 'moveBackward', msg => onMessage( { name: 'moveBackward', arg: msg } ) );
             socket.on( 'turnRight', msg => onMessage( { name: 'turnRight', arg: msg } ) );
             socket.on( 'turnLeft', msg => onMessage( { name: 'turnLeft', arg: msg } ) );
-
-            //socket.on( 'disconnect', () => delete sockets[key] );
-            socket.on( 'disconnect', () => delete sockets[clientId] );
+            
+            socket.on( 'disconnect', () => delete sockets[socketId] );
         });
         
         http.listen(port);
+        console.log(`SocketIO server listening on port ${port}`)
     }
 }
 
-module.exports = Controller;
+module.exports = SocketIOServer;

@@ -3,45 +3,48 @@ package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 import io.socket.client.IO
 import io.socket.client.Socket
 
-class SocketIOClient(ip: String, port: Int, private val connectionListener: ConnectionListener) : OutputChannel {
-    private val socket: Socket = IO.socket("http://$ip:$port")
+class SocketIOClient(private val connectionListener: ConnectionListener) : OutputChannel {
+    private var socket: Socket? = null
 
-    init {
-        socket
-            .on(Socket.EVENT_CONNECT, { connectionListener.onConnected() })
-            .on(Socket.EVENT_DISCONNECT, { connectionListener.onDisconnected() })
+    override fun connect(ip: String, port: Int) {
+        socket?.disconnect()
+
+        initSocket(ip, port)
+        socket?.connect()
     }
 
-    override fun connect() {
-        socket.connect()
+    private fun initSocket(ip: String, port: Int) {
+        val opts = IO.Options()
+        opts.forceNew = true
+        opts.reconnection = false
+
+        socket = IO.socket("http://$ip:$port", opts)
+        socket
+            ?.on(Socket.EVENT_CONNECT, { connectionListener.postOnMainThread { connectionListener.onConnected() } })
+            ?.on(Socket.EVENT_DISCONNECT, { connectionListener.postOnMainThread { connectionListener.onDisconnected() } })
     }
 
     override fun disconnect() {
-        socket.disconnect()
+        socket?.disconnect()
     }
 
     override fun onAlarm() {
-        socket.emit(OutputChannel.OutputConstants.alarm)
+        socket?.emit(OutputChannel.OutputConstants.alarm)
     }
 
     override fun forward(duration: Int) {
-        socket.emit(OutputChannel.OutputConstants.moveForward, duration)
+        socket?.emit(OutputChannel.OutputConstants.moveForward, duration)
     }
 
     override fun backward(duration: Int) {
-        socket.emit(OutputChannel.OutputConstants.moveBackward, duration)
+        socket?.emit(OutputChannel.OutputConstants.moveBackward, duration)
     }
 
     override fun right(duration: Int) {
-        socket.emit(OutputChannel.OutputConstants.turnRight, duration)
+        socket?.emit(OutputChannel.OutputConstants.turnRight, duration)
     }
 
     override fun left(duration: Int) {
-        socket.emit(OutputChannel.OutputConstants.turnLeft, duration)
+        socket?.emit(OutputChannel.OutputConstants.turnLeft, duration)
     }
-}
-
-interface ConnectionListener {
-    fun onConnected()
-    fun onDisconnected()
 }

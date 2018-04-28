@@ -10,7 +10,7 @@ interface OutputChannel {
         const val turnLeft = "turnLeft"
     }
 
-    fun connect()
+    fun connect(ip: String, port: Int)
     fun disconnect()
 
     fun onAlarm()

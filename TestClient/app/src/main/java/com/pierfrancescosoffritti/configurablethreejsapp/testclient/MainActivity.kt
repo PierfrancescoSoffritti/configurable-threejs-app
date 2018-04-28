@@ -1,23 +1,24 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), ConnectionListener {
 
+    private lateinit var handler: Handler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val ip = ip_address_edit_text.text
-        val port = port_edit_text.text
-
-        val outputChannel = SocketIOClient(ip.toString(), Integer.parseInt(port.toString()), this)
-
+        handler = Handler(mainLooper)
         lifecycle.addObserver(PreferencesManager(this, ip_address_edit_text, port_edit_text))
 
-        connect_button.setOnClickListener { outputChannel.connect() }
+        val outputChannel = SocketIOClient(this)
+
+        connect_button.setOnClickListener { outputChannel.connect(ip_address_edit_text.text.toString(), Integer.parseInt(port_edit_text.text.toString())) }
         alarm_button.setOnClickListener { outputChannel.disconnect() }
 
         forward_button.setOnClickListener { outputChannel.forward(300) }
@@ -39,6 +40,10 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
 
     override fun onDisconnected() {
         connection_status_lable.text = "DISCONNECTED"
+    }
+
+    override fun postOnMainThread(callback: () -> Unit) {
+        handler.post(callback)
     }
 
 //    private fun connect() {
