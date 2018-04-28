@@ -1,7 +1,7 @@
 import * as THREE from '../../node_modules/three/build/three.module.js'
 
-export default (scene, robotConfiguration) => {
-    const playerPosition = { x: robotConfiguration.position.x, y: 2, z: robotConfiguration.position.y }
+export default (scene, playerConfiguration) => {
+    const playerPosition = { x: playerConfiguration.position.x, y: 2, z: playerConfiguration.position.y }
 
     const group = new THREE.Group()    
     group.position.set(playerPosition.x, playerPosition.y, playerPosition.z)

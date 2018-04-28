@@ -1,12 +1,12 @@
 export function parseConfiguration(config) {
     const clone = JSON.parse(JSON.stringify(config))
 
-    const { floor, robot, sonars, movingObstacles, staticObstacles } = clone
+    const { floor, player, sonars, movingObstacles, staticObstacles } = clone
 
     checkConfigValidity(clone)
 
-    robot.position.x = ( robot.position.x - 0.5 ) * floor.size.x
-    robot.position.y = ( robot.position.y - 0.5 ) * floor.size.y
+    player.position.x = ( player.position.x - 0.5 ) * floor.size.x
+    player.position.y = ( player.position.y - 0.5 ) * floor.size.y
 
     sonars.forEach( sonar => {
         sonar.position.x = ( sonar.position.x - 0.5 ) * floor.size.x
@@ -49,20 +49,20 @@ export function mapConfigurationToGUI(sceneConstants, sceneConfiguration, contro
 
 function checkConfigValidity(config) {
     checkJsonStructure(config)
-    const { floor, robot, sonars, movingObstacles, staticObstacles } = config
+    const { floor, player, sonars, movingObstacles, staticObstacles } = config
     
-    checkPositionIsInRange(robot)
+    checkPositionIsInRange(player)
 
     sonars.forEach( checkPositionIsInRange )
     movingObstacles.forEach( checkPositionIsInRange )
     staticObstacles.forEach( checkStaticObstacle )
 
     function checkJsonStructure(config) {
-        const { floor, robot, sonars, movingObstacles, staticObstacles } = config
+        const { floor, player, sonars, movingObstacles, staticObstacles } = config
         if(!floor)
             throw new Error('Config file malformed: floor not defined')
-        if(!robot)
-            throw new Error('Config file malformed: robot not defined')
+        if(!player)
+            throw new Error('Config file malformed: player not defined')
         if(!sonars)
             throw new Error('Config file malformed: sonars not defined')
         if(!movingObstacles)
@@ -92,14 +92,14 @@ function checkConfigValidity(config) {
 }
 
 function updateSceneConstants(sceneConstants, newSceneConstants) {
-    const { floor, robot, sonars, movingObstacles, staticObstacles } = newSceneConstants
+    const { floor, player, sonars, movingObstacles, staticObstacles } = newSceneConstants
 
     sceneConstants.floor.size.x = floor.size.x
     sceneConstants.floor.size.y = floor.size.y
 
-    sceneConstants.robot.position.x = robot.position.x
-    sceneConstants.robot.position.y = robot.position.y
-    sceneConstants.robot.speed = robot.speed
+    sceneConstants.player.position.x = player.position.x
+    sceneConstants.player.position.y = player.position.y
+    sceneConstants.player.speed = player.speed
 
     for(let i=0; i<sceneConstants.sonars.length; i++) {
         sceneConstants.sonars[i].position.x = sonars[i].position.x
