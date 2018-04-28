@@ -229,4 +229,4 @@ Two examples of client are provided in this repo, in the `ClientExamples` folder
 
 <img src="https://raw.githubusercontent.com/PierfrancescoSoffritti/ConfigurableThreejsApp/master/pictures/androidapp.png" height="500">
 
-- Node.js client, it can be used as a reference to write other Node.js clients.
+- Node.js client, it can be used as a reference to write other Node.js clients. To be launch this client requires two arguments: ip and port of the server.
