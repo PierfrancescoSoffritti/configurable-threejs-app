@@ -40,8 +40,12 @@ function Sonar(scene, config) {
 
     let sensedX, sensedY = false
     const padding = 1.5
-	
-	function update(time) {       
+    
+    let currentTime, prevTime;
+
+	function update(time) {     
+        currentTime = time;
+
         mesh.position.set( config.position.x, size/1.5, config.position.y )
         updateColor(sensedX || sensedY, mesh.material)
     }
@@ -62,13 +66,19 @@ function Sonar(scene, config) {
     
     function sense(targetPosition, sonarPosition, padding, axis, sonarName) {
         if(targetPosition.y >= sonarPosition.y -padding && targetPosition.y <= sonarPosition.y +padding) {
-            
             const distance = Math.trunc( sonarPosition.x - targetPosition.x )
-            eventBus.post(eventBusEvents.sonarActivated, { sonarName, distance, axis })
-
+            postEvent(sonarName, distance, axis)
             return true
         } else
             return false
+    }
+
+    function postEvent(sonarName, distance, axis) {
+        const deltaTime = currentTime - prevTime;
+        if(deltaTime < .8) return;
+        else prevTime = currentTime;
+
+        eventBus.post(eventBusEvents.sonarActivated, { sonarName, distance, axis })
     }
 
     function updateColor(sensed, material) {
