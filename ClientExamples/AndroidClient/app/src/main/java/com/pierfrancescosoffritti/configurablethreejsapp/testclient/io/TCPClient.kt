@@ -1,8 +1,6 @@
-package com.pierfrancescosoffritti.configurablethreejsapp.testclient
+package com.pierfrancescosoffritti.configurablethreejsapp.testclient.io
 
 import android.util.Log
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableOnSubscribe
@@ -17,35 +15,32 @@ class TCPClient {
     private val separator = ";"
 
     private var socket: Socket? = null
-    private lateinit var inSocket: BufferedReader
-    private lateinit var outSocket: PrintWriter
+    private var inSocket: BufferedReader? = null
+    private var outSocket: PrintWriter? = null
 
     fun connect(ip: String, port: Int): Single<TCPClient> {
-        socket?.close()
-
         return Single.create<TCPClient> {
-            val socketAddress = InetSocketAddress(InetAddress.getByName(ip), port)
-            socket = Socket()
-
             try {
-                socket?.connect(socketAddress, 5000)
+                val socketAddress = InetSocketAddress(InetAddress.getByName(ip), port)
+                socket = Socket()
+
+                socket?.connect(socketAddress, 1000)
                 inSocket = BufferedReader(InputStreamReader(socket?.getInputStream()))
                 outSocket = PrintWriter(socket?.getOutputStream(), true)
 
                 it.onSuccess( this )
-
-            } catch (e: SocketTimeoutException) {
+            } catch (e: Exception) {
                 it.onError(e)
             }
         }
     }
 
     fun write(name: String, arg: Int) {
-        val string = "$separator{ \"name\":\"$name\", \"arg\":$arg }$separator"
+        val message = "$separator{ \"name\":\"$name\", \"arg\":$arg }$separator"
         try {
-            outSocket.println(string)
+            outSocket?.println(message)
         } catch (e: Exception) {
-            Log.e(javaClass.simpleName, "Error writing: $string")
+            Log.e(javaClass.simpleName, "Error writing: $message")
             throw e
         }
     }
@@ -53,14 +48,13 @@ class TCPClient {
     fun getOutput() : Flowable<String> {
         val onSubscribe: FlowableOnSubscribe<String> = FlowableOnSubscribe { subscriber ->
             try {
-                while (true) {
-                    val message = inSocket.readLine()
+                while (inSocket != null) {
+                    val message = inSocket!!.readLine()
                     message.split(separator)
                         .map{ it.trim() }
                         .filter{ it.isNotEmpty() }
                         .forEach{ subscriber.onNext(it) }
                 }
-
             } catch (e: Exception) {
                 subscriber.onError(e)
             } finally {
@@ -68,21 +62,21 @@ class TCPClient {
             }
         }
 
-        return Flowable.create(onSubscribe, BackpressureStrategy.BUFFER);
+        return Flowable.create(onSubscribe, BackpressureStrategy.BUFFER)
     }
 
     fun disconnect(): Single<TCPClient> {
         return Single.create<TCPClient> {
             try {
-                outSocket.flush()
-                outSocket.close()
+                outSocket?.flush()
+                outSocket?.close()
 
-                inSocket.close()
+                inSocket?.close()
 
                 socket?.close()
 
                 it.onSuccess(this)
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 it.onError(e)
             }
         }

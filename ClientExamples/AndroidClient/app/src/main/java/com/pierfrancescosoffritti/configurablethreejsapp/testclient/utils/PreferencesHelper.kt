@@ -1,4 +1,4 @@
-package com.pierfrancescosoffritti.configurablethreejsapp.testclient
+package com.pierfrancescosoffritti.configurablethreejsapp.testclient.utils
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
@@ -6,7 +6,7 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Context
 import android.widget.EditText
 
-class PreferencesManager(private val context: Context, private val ipEditText: EditText, private val portEditText: EditText) : LifecycleObserver {
+class PreferencesHelper(private val context: Context, private val ipEditText: EditText, private val portEditText: EditText) : LifecycleObserver {
     private val preferenceKeyIp = "ip"
     private val preferenceKeyPort = "port"
     private val sharedPreferencesKey = "MainActivity_SharedPreferences"

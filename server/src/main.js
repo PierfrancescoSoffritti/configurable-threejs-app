@@ -1,6 +1,5 @@
 const WebpageServer = require('./WebpageServer')
 const TCPServer = require('./TCPServer')
-const SocketIOServer = require('./SocketIOServer')
 
 const portNumber = readPortNumberFromArguments()
 
@@ -12,7 +11,6 @@ const webpageCallbacks = {
 
 const webpageServer = new WebpageServer(webpageCallbacks)
 const server = new TCPServer( portNumber, command => webpageServer[command.name](command.arg) )
-// const server = new SocketIOServer( portNumber, command => command => webpageServer[command.name](command.arg) )
 
 function readPortNumberFromArguments() {
     const port = Number(process.argv[2])

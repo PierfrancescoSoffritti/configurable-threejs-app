@@ -1,6 +1,5 @@
 package com.pierfrancescosoffritti.configurablethreejsapp.testclient
 
-import com.google.gson.JsonObject
 import io.reactivex.Flowable
 
 interface OutputChannel {

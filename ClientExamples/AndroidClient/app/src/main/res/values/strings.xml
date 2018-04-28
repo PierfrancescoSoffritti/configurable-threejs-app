@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">TestClient</string>
+    <string name="app_name">AndroidClient</string>
+    <string name="connected">Connected</string>
+    <string name="not_connected">Not connected</string>
+    <string name="placeholder_text">placeholder</string>
+    <string name="forward">forward</string>
+    <string name="alarm">alarm</string>
+    <string name="backward">backward</string>
+    <string name="turn_left">turn left</string>
+    <string name="turn_right">turn right</string>
+    <string name="server_ip">server IP</string>
+    <string name="server_port">server PORT</string>
+    <string name="connect">connect</string>
+    <string name="disconnect">disconnect</string>
 </resources>

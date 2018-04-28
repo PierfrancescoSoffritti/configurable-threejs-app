@@ -1,7 +1,6 @@
-package com.pierfrancescosoffritti.configurablethreejsapp.testclient
+package com.pierfrancescosoffritti.configurablethreejsapp.testclient.io
 
-import android.os.Handler
-import com.google.gson.JsonObject
+import com.pierfrancescosoffritti.configurablethreejsapp.testclient.OutputChannel
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -11,16 +10,14 @@ class TCPEndPoint(private val tcpClient: TCPClient, private val connectionListen
         tcpClient.connect(ip, port)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess{ connectionListener.onConnected() }
-            .subscribe()
+            .subscribe( { connectionListener.onConnected() }, { connectionListener.onError(it) })
     }
 
     override fun disconnect() {
         tcpClient.disconnect()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess{ connectionListener.onDisconnected() }
-            .subscribe()
+            .subscribe( { connectionListener.onDisconnected() }, { connectionListener.onError(it) } )
     }
 
     override fun onAlarm() {
