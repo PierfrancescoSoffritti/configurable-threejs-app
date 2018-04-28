@@ -9,7 +9,6 @@ import java.io.*
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
-import java.net.SocketTimeoutException
 
 class TCPClient {
     private val separator = ";"
@@ -35,8 +34,8 @@ class TCPClient {
         }
     }
 
-    fun write(name: String, arg: Int) {
-        val message = "$separator{ \"name\":\"$name\", \"arg\":$arg }$separator"
+    fun write(type: String, arg: Int) {
+        val message = "$separator{ \"type\":\"$type\", \"arg\":$arg }$separator"
         try {
             outSocket?.println(message)
         } catch (e: Exception) {

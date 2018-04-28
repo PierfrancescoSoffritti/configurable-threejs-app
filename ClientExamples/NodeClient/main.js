@@ -4,7 +4,7 @@ const SEPARATOR = ";"
 
 const client = new Client({ip: readIpFromArguments(), port: readPortNumberFromArguments()})
 
-const msg = `{ "name": "moveForward", "arg": 1000 }`
+const msg = `{ "type": "moveForward", "arg": 1000 }`
 client.send( msg )
 
 function Client({ port, ip }) {
