@@ -227,6 +227,6 @@ Two examples of client are provided in this repo, in the `ClientExamples` folder
 
 - Android client, it can be used as a reference to write Java/Kotlin/.. clients. The app is written in Kotlin, translating the IO module to other langues should be trivial. The apk of the app can be downloaded [here](https://github.com/PierfrancescoSoffritti/ConfigurableThreejsApp/raw/master/ClientExamples/AndroidClient/app.apk).
 
-<img src="https://raw.githubusercontent.com/PierfrancescoSoffritti/ConfigurableThreejsApp/master/pictures/androidapp.png" height="100">
+<img src="https://raw.githubusercontent.com/PierfrancescoSoffritti/ConfigurableThreejsApp/master/pictures/androidapp.png" height="800">
 
 - Node.js client, it can be used as a reference to write other Node.js clients.
