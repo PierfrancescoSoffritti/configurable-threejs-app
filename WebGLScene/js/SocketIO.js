@@ -9,6 +9,8 @@ export default (onKeyUp, onKeyDown) => {
     socket.on( 'turnRight', duration => turnRight(duration) )
     socket.on( 'turnLeft', duration => turnLeft(duration) )
     socket.on( 'alarm', stopMoving )
+    
+    socket.on( 'disconnect', () => console.log("server disconnected") )
 
     eventBus.subscribe( eventBusEvents.sonarActivated, sonarId => socket.emit('sonarActivated', sonarId))
     eventBus.subscribe( eventBusEvents.collision, objectName => { console.log(`collision: ${objectName}`); socket.emit('collision', objectName); stopMoving(); })

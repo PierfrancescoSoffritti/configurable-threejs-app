@@ -1,9 +1,6 @@
 import SceneManager from './SceneManager.js'
 import initSocketIO from './SocketIO.js'
 
-import eventBus from './eventBus/EventBus.js'
-import eventBusEvents from './eventBus/events.js'
-
 initSocketIO(onKeyUp, onKeyDown)
 
 const canvas = document.getElementById('canvas')
