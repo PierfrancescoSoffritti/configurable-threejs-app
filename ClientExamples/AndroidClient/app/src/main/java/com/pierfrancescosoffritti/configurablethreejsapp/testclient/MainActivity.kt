@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
         outputChannel.getOutput()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ server_output_text_view.text = it }, { Log.e(javaClass.simpleName, it.toString()) }, {  })
+                .subscribe({ server_output_text_view.text = it }, { Log.e(javaClass.simpleName, it.toString()); onError(it) }, {  })
     }
 
     override fun onDisconnected() {
@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity(), ConnectionListener {
     override fun onError(error: Throwable) {
         val toast = Toast.makeText(applicationContext, error.toString(), Toast.LENGTH_SHORT)
         toast.show()
+
+        outputChannel.disconnect()
+        onDisconnected()
     }
 
     private fun setupClickListeners(outputChannel: OutputChannel) {
