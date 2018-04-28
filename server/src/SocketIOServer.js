@@ -20,6 +20,7 @@ function TCPServer(port, onMessage) {
             // sockets[key] = socket
             
             const clientId = `${socket.remoteAddress}`
+            console.log(clientId)
             connectedClients[clientId] = socket
 
             console.log(`\n[${ clientId }] connected`)
