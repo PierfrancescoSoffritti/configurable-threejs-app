@@ -1,4 +1,4 @@
-# ConfigurableThreejsApp
+# configurable-threejs-app
 
 This project is a configurable 3D web-based application built with Three.js. The webpage is served from an internal Node.js server.
 
